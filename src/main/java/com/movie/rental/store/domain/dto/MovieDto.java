@@ -16,7 +16,15 @@ public class MovieDto {
     private Long movieId;
     private String movieTitle;
     private String movieDirector;
-    private List<Type> movieTypes;
+    private String movieDescription;
+    private Type movieType;
     private int movieYear;
-    private List<Long> copiesId;
+
+    public MovieDto(String movieTitle, String movieDirector, String movieDescription, Type movieType, int movieYear) {
+        this.movieTitle = movieTitle;
+        this.movieDirector = movieDirector;
+        this.movieDescription = movieDescription;
+        this.movieType = movieType;
+        this.movieYear = movieYear;
+    }
 }

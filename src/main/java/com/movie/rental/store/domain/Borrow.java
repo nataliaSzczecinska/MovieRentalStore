@@ -1,4 +1,4 @@
-package com.movie.rental.store.domain.dto;
+package com.movie.rental.store.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +11,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BorrowDto {
+public class Borrow {
     private Long borrowId;
-    private Long copyId;
-    private Long customerId;
+    private Copy copy;
+    private Customer customer;
     private LocalDate borrowDate;
     private LocalDate returnDate;
     private LocalDate realReturnDate;

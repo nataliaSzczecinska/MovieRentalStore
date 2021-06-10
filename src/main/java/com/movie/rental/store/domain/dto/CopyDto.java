@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class CopyDto {
     private Long copyId;
-    private Long titleId;
+    private Long movieId;
     private Status copyStatus;
     private MediaType mediaType;
 }
