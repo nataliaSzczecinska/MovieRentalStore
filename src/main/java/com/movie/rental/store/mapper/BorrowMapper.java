@@ -20,9 +20,7 @@ public class BorrowMapper {
                 copy,
                 customer,
                 borrowDto.getBorrowDate(),
-                borrowDto.getReturnDate(),
-                borrowDto.getRealReturnDate(),
-                borrowDto.isFinish());
+                borrowDto.getReturnDate());
     }
 
     public BorrowDto mapToBorrowDto (final Borrow borrow) {
@@ -31,9 +29,7 @@ public class BorrowMapper {
                 borrow.getCopy().getCopyId(),
                 borrow.getCustomer().getCustomerId(),
                 borrow.getBorrowDate(),
-                borrow.getReturnDate(),
-                borrow.getRealReturnDate(),
-                borrow.isFinish());
+                borrow.getReturnDate());
     }
 
     public List<BorrowDto> mapToBorrowDtoList (final List<Borrow> borrowList) {

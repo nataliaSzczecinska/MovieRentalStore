@@ -2,6 +2,7 @@ package com.movie.rental.store.mapper;
 
 import com.movie.rental.store.domain.Copy;
 import com.movie.rental.store.domain.Movie;
+import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.domain.dto.MovieDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,19 +14,20 @@ import java.util.stream.Collectors;
 public class MovieMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieMapper.class);
 
-    public Movie mapToMovie (final MovieDto movieDto, final List<Copy> copies) {
-        LOGGER.info("Map Movie to MovieDto");
+    public Movie mapToMovie(final MovieDto movieDto, final List<Copy> copies, final List<DeleteCopy> deleteCopies) {
+        LOGGER.info("Map MovieDto to Movie");
         return new Movie(movieDto.getMovieId(),
                 movieDto.getMovieTitle(),
                 movieDto.getMovieDirector(),
                 movieDto.getMovieDescription(),
                 movieDto.getMovieType(),
                 movieDto.getMovieYear(),
-                copies);
+                copies,
+                deleteCopies);
     }
 
     public MovieDto mapToMovieDto (final Movie movie) {
-        LOGGER.info("Map MovieDto to Movie");
+        LOGGER.info("Map Movie to MovieDto");
         return new MovieDto(movie.getMovieId(),
                 movie.getMovieTitle(),
                 movie.getMovieDirector(),

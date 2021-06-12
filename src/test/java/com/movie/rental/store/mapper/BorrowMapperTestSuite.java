@@ -30,7 +30,7 @@ public class BorrowMapperTestSuite {
         Movie movie = new Movie(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
         Copy copy = new Copy(1L, movie, Status.AVAILABLE, MediaType.BLU_RAY);
         Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false);
-        BorrowDto borrowDto = new BorrowDto(1L, 1L, 1L, LocalDate.of(2000, 10, 10), LocalDate.of(2000, 10, 13), LocalDate.of(2000, 10, 12), true);
+        BorrowDto borrowDto = new BorrowDto(1L, 1L, 1L, LocalDate.of(2000, 10, 10), LocalDate.of(2000, 10, 13));
 
         //When
         Borrow borrow = borrowMapper.mapToBorrow(borrowDto, copy, customer);
@@ -43,8 +43,6 @@ public class BorrowMapperTestSuite {
         assertEquals(MediaType.BLU_RAY, borrow.getCopy().getMediaType());
         assertEquals(LocalDate.of(2000, 10, 10), borrow.getBorrowDate());
         assertEquals(LocalDate.of(2000, 10, 13), borrow.getReturnDate());
-        assertEquals(LocalDate.of(2000, 10, 12), borrow.getRealReturnDate());
-        assertTrue(borrow.isFinish());
     }
 
     @Test
@@ -53,7 +51,7 @@ public class BorrowMapperTestSuite {
         Movie movie = new Movie(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
         Copy copy = new Copy(1L, movie, Status.AVAILABLE, MediaType.BLU_RAY);
         Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false);
-        Borrow borrow = new Borrow(1L, copy, customer, LocalDate.of(2000, 10, 10), LocalDate.of(2000, 10, 13), LocalDate.of(2000, 10, 12), true);
+        Borrow borrow = new Borrow(1L, copy, customer, LocalDate.of(2000, 10, 10), LocalDate.of(2000, 10, 13));
 
         //When
         BorrowDto borrowDto = borrowMapper.mapToBorrowDto(borrow);
@@ -64,8 +62,6 @@ public class BorrowMapperTestSuite {
         assertEquals(1L, borrowDto.getCustomerId());
         assertEquals(LocalDate.of(2000, 10, 10), borrowDto.getBorrowDate());
         assertEquals(LocalDate.of(2000, 10, 13), borrowDto.getReturnDate());
-        assertEquals(LocalDate.of(2000, 10, 12), borrowDto.getRealReturnDate());
-        assertTrue(borrowDto.isFinish());
     }
 
     @Test
@@ -78,9 +74,9 @@ public class BorrowMapperTestSuite {
         Copy copy3 = new Copy(3L, movie2, Status.BORROWED, MediaType.DVD);
         Customer customer1 = new Customer(1L, "mail1@address.com", LocalDate.of(2000, 1, 1), false);
         Customer customer2 = new Customer(2L, "mail2@address.com", LocalDate.of(2001, 1, 1), false);
-        Borrow borrow1 = new Borrow(1L, copy1, customer1, LocalDate.of(2001, 10, 10), LocalDate.of(2001, 10, 13), LocalDate.of(2001, 10, 12), true);
-        Borrow borrow2 = new Borrow(2L, copy2, customer2, LocalDate.of(2002, 10, 10), LocalDate.of(2002, 10, 13), null, false);
-        Borrow borrow3 = new Borrow(3L, copy3, customer2, LocalDate.of(2003, 10, 10), LocalDate.of(2003, 10, 13), LocalDate.of(2003, 10, 12), true);
+        Borrow borrow1 = new Borrow(1L, copy1, customer1, LocalDate.of(2001, 10, 10), LocalDate.of(2001, 10, 13));
+        Borrow borrow2 = new Borrow(2L, copy2, customer2, LocalDate.of(2002, 10, 10), LocalDate.of(2002, 10, 13));
+        Borrow borrow3 = new Borrow(3L, copy3, customer2, LocalDate.of(2003, 10, 10), LocalDate.of(2003, 10, 13));
         List<Borrow> borrows = Arrays.asList(borrow1, borrow2, borrow3);
 
         //When
@@ -92,17 +88,13 @@ public class BorrowMapperTestSuite {
         assertEquals(1L, borrowDtos.get(0).getCustomerId());
         assertEquals(1L, borrowDtos.get(0).getCopyId());
         assertEquals(LocalDate.of(2001, 10, 10), borrowDtos.get(0).getBorrowDate());
-        assertTrue(borrowDtos.get(0).isFinish());
         assertEquals(2L, borrowDtos.get(1).getBorrowId());
         assertEquals(2L, borrowDtos.get(1).getCustomerId());
         assertEquals(2L, borrowDtos.get(1).getCopyId());
         assertEquals(LocalDate.of(2002, 10, 10), borrowDtos.get(1).getBorrowDate());
-        assertFalse(borrowDtos.get(1).isFinish());
-        assertNull(borrowDtos.get(1).getRealReturnDate());
         assertEquals(3L, borrowDtos.get(2).getBorrowId());
         assertEquals(2L, borrowDtos.get(2).getCustomerId());
         assertEquals(3L, borrowDtos.get(2).getCopyId());
         assertEquals(LocalDate.of(2003, 10, 10), borrowDtos.get(2).getBorrowDate());
-        assertTrue(borrowDtos.get(2).isFinish());
     }
 }

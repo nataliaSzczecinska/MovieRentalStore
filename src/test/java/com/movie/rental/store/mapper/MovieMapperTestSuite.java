@@ -24,7 +24,7 @@ public class MovieMapperTestSuite {
         MovieDto movieDto = new MovieDto(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
 
         //When
-        Movie movie = movieMapper.mapToMovie(movieDto, null);
+        Movie movie = movieMapper.mapToMovie(movieDto, null, null);
 
         //Then
         assertEquals(1L, movie.getMovieId());

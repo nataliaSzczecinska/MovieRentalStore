@@ -2,6 +2,8 @@ package com.movie.rental.store.controller;
 
 import com.movie.rental.store.domain.enums.Type;
 import com.movie.rental.store.domain.dto.MovieDto;
+import com.movie.rental.store.exception.MovieNotFoundException;
+import com.movie.rental.store.facade.MovieFacade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,56 +17,43 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/movies")
 public class MovieController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieController.class);
+    private final MovieFacade movieFacade;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MovieDto> getAllMovies() {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Title 1", "Director 1", "Description", Type.COMEDY, 2000));
-        movieList.add(new MovieDto(2L, "Title 2", "Director 2", "Description", Type.COMEDY, 1999));
-        movieList.add(new MovieDto(3L, "Title 3", "Director 3", "Description", Type.FAMILY, 2020));
-        return movieList;
+        LOGGER.info("Get all movies");
+        return movieFacade.getAllMovies();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
-    public MovieDto getMovieById(@PathVariable Long movieId) {
-        return new MovieDto(1L, "Movie by id", "Director 1", "Description", Type.CRIMINAL, 2000);
+    public MovieDto getMovieById(@PathVariable Long movieId) throws MovieNotFoundException {
+        LOGGER.info("Get movie by id " + movieId);
+        return movieFacade.getMovieById(movieId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/movieByTitle")
     public List<MovieDto> getMoviesByTitle(@RequestParam String movieTitle) {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Movie by title 1", "Director 1", "Description", Type.ROMANTIC, 2000));
-        movieList.add(new MovieDto(2L, "Movie by title 2", "Director 2", "Description", Type.SCIENCE_FICTION, 1999));
-        movieList.add(new MovieDto(3L, "Movie by title 3", "Director 3", "Description", Type.THRILLER, 2020));
-        return movieList;
+        return movieFacade.getMoviesByTitle(movieTitle);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/movieByDirector")
     public List<MovieDto> getMoviesByDirector(@RequestParam String movieDirector) {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Movie by director 1", "Director 1", "Description", Type.FANTASY, 2000));
-        movieList.add(new MovieDto(2L, "Movie by director 2", "Director 2", "Description", Type.HORROR, 1999));
-        movieList.add(new MovieDto(3L, "Movie by director 3", "Director 3", "Description", Type.FAMILY, 2020));
-        return movieList;
+        return movieFacade.getMoviesByDirector(movieDirector);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/movieByDescription")
+    public List<MovieDto> getMoviesByDescription(@RequestParam String movieDescription) {
+        return movieFacade.getMoviesByDescription(movieDescription);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/movieByYear")
     public List<MovieDto> getMoviesByYear(@RequestParam int movieYear) {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Movie by year 1", "Director 1", "Description", Type.ADVENTURE, 2000));
-        movieList.add(new MovieDto(2L, "Movie by year 2", "Director 2", "Description", Type.HORROR, 1999));
-        movieList.add(new MovieDto(3L, "Movie by year 3", "Director 3", "Description", Type.ANIMATED, 2020));
-        return movieList;
+        return movieFacade.getMoviesByYear(movieYear);
     }
 
-    //jak to zrobić?
     @RequestMapping(method = RequestMethod.GET, value = "/movieByType")
     public List<MovieDto> getMoviesByType(@RequestParam String movieType) {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Movie by type 1", "Director 1", "Description", Type.COMEDY, 2000));
-        movieList.add(new MovieDto(2L, "Movie by type 2", "Director 2", "Description", Type.COMEDY, 1999));
-        movieList.add(new MovieDto(3L, "Movie by type 3", "Director 3", "Description", Type.COMEDY, 2020));
-        return movieList;
+        return movieFacade.getMoviesByType(movieType);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/movieByFilmweb")
@@ -88,16 +77,12 @@ public class MovieController {
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createMovie(@RequestBody MovieDto movieDto) {
         LOGGER.info("The new movie has just been created");
+        movieFacade.createMovie(movieDto);
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
     public MovieDto updateMovie(@RequestBody MovieDto movieDto) {
         LOGGER.info("The movie has just been updated");
-        return new MovieDto(1L, "Update movie", "Director 1", "Description", Type.ACTION, 2000);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{movieId}")
-    public void deleteMovie(@PathVariable Long movieId) {
-        LOGGER.info("The movie has just been deleted");
+        return movieFacade.updateMovie(movieDto);
     }
 }

@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @Entity
 @Table(name ="COPIES")
@@ -32,4 +33,18 @@ public class Copy {
     @NotNull
     @Column(name = "MEDIA_TYPE")
     private MediaType mediaType;
+
+    @OneToMany (
+            targetEntity = Borrow .class,
+            mappedBy = "copy",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Borrow> borrow;
+
+    public Copy(@NotNull Long copyId, @NotNull Movie movie, @NotNull Status copyStatus, @NotNull MediaType mediaType) {
+        this.copyId = copyId;
+        this.movie = movie;
+        this.copyStatus = copyStatus;
+        this.mediaType = mediaType;
+    }
 }

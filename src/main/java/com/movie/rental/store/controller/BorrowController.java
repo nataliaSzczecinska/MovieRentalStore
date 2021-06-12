@@ -20,9 +20,9 @@ public class BorrowController {
     public List<BorrowDto> getBorrowsByMovieId(@PathVariable Long movieId) {
         LOGGER.info("Get borrows by movie");
         List<BorrowDto> movieList = new ArrayList<>();
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,5,1), LocalDate.of(2021,9,1), LocalDate.of(2021,9,1), false));
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,6,11), LocalDate.of(2021,9,5), LocalDate.of(2021,9,1), false));
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,7,13), LocalDate.of(2021,12,23), LocalDate.of(2021,9,1), true));
+        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,5,1), LocalDate.of(2021,9,1)));
+        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,6,11), LocalDate.of(2021,9,5)));
+        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,7,13), LocalDate.of(2021,12,23)));
         return movieList;
     }
 
@@ -30,19 +30,9 @@ public class BorrowController {
     public List<BorrowDto> getBorrowsByUserId(@PathVariable Long userId) {
         LOGGER.info("Get borrows by user");
         List<BorrowDto> movieList = new ArrayList<>();
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,5,1), LocalDate.of(2021,9,1), LocalDate.of(2021,9,1), false));
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,6,11), LocalDate.of(2021,9,5), LocalDate.of(2021,9,1), false));
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,7,13), LocalDate.of(2021,12,23), LocalDate.of(2021,9,1), true));
-        return movieList;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/notFinishBorrows")
-    public List<BorrowDto> getNotFinishBorrows() {
-        LOGGER.info("Get borrows is not finish");
-        List<BorrowDto> movieList = new ArrayList<>();
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,5,1), LocalDate.of(2021,9,1), LocalDate.of(2021,9,1), false));
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,6,11), LocalDate.of(2021,9,1), LocalDate.of(2021,9,5), false));
-        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,7,13), LocalDate.of(2021,9,1), LocalDate.of(2021,12,23), true));
+        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,5,1), LocalDate.of(2021,9,1)));
+        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,6,11), LocalDate.of(2021,9,5)));
+        movieList.add(new BorrowDto(1L, 1L, 1L, LocalDate.of(2021,7,13), LocalDate.of(2021,12,23)));
         return movieList;
     }
 
@@ -51,9 +41,15 @@ public class BorrowController {
         LOGGER.info("The borrow has just been created");
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/updateBorrow", consumes = APPLICATION_JSON_VALUE)
-    public BorrowDto updateBorrow(@RequestBody BorrowDto borrowDto) {
-        LOGGER.info("The borrow has just been updated");
-        return new BorrowDto(1L, 1L, 1L, LocalDate.of(2010, 12,12), LocalDate.of(2019, 10, 9), LocalDate.of(2021,9,1), true);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{borrowId}/changeBorrowReturnDate")
+    public BorrowDto changeBorrowReturnDate(@RequestParam String newBorrowDate, @PathVariable Long borrowId) {
+        LOGGER.info("The borrow has just changed the return date");
+        return new BorrowDto(1L, 1L, 1L, LocalDate.of(2010, 12,12), LocalDate.of(2019, 10, 9));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{borrowId}")
+    public BorrowDto borrowIsFinish(@PathVariable BorrowDto borrowId, @RequestParam String finishReason) {
+        LOGGER.info("The borrow has just been finished");
+        return new BorrowDto(1L, 1L, 1L, LocalDate.of(2010, 12,12), LocalDate.of(2019, 10, 9));
     }
 }

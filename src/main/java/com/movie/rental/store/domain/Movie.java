@@ -1,5 +1,6 @@
 package com.movie.rental.store.domain;
 
+import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.domain.enums.Type;
 import lombok.*;
 import javax.persistence.*;
@@ -45,6 +46,13 @@ public class Movie {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Copy> copies;
+
+    @OneToMany(
+            targetEntity = DeleteCopy.class,
+            mappedBy = "movie",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<DeleteCopy> deleteCopies;
 
     public Movie(@NotNull Long movieId, @NotNull String movieTitle, @NotNull String movieDirector, @NotNull String movieDescription, @NotNull Type movieType, @NotNull int movieYear) {
         this.movieId = movieId;

@@ -1,4 +1,4 @@
 package com.movie.rental.store.exception;
 
-public class CustomerNotFoundException {
+public class CustomerNotFoundException extends Exception {
 }

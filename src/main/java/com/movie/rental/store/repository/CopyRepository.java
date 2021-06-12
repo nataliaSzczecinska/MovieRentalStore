@@ -1,6 +1,6 @@
 package com.movie.rental.store.repository;
 
-import com.movie.rental.store.domain.Movie;
+import com.movie.rental.store.domain.Copy;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,13 +9,16 @@ import java.util.*;
 
 @Transactional
 @Repository
-public interface MovieRepository extends CrudRepository<Movie, Long> {
+public interface CopyRepository extends CrudRepository<Copy, Long> {
     @Override
-    public List<Movie> findAll();
+    public List<Copy> findAll();
 
     @Override
-    public Optional<Movie> findById(Long movieId);
+    public Optional<Copy> findById(Long copyId);
 
     @Override
-    public Movie save(Movie movie);
+    public Copy save(Copy copy);
+
+    @Override
+    public void deleteById(Long copyId);
 }
