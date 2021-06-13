@@ -1,7 +1,9 @@
 package com.movie.rental.store.repository.archive;
 
 import com.movie.rental.store.domain.archive.BorrowArchive;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,4 +21,7 @@ public interface BorrowArchiveRepository extends CrudRepository<BorrowArchive, L
 
     @Override
     public BorrowArchive save(BorrowArchive borrowArchive);
+
+    @Query
+    public List<BorrowArchive> retrieveBorrowArchiveByCustomerId(@Param("id") Long id);
 }

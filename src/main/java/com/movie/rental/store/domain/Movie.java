@@ -6,7 +6,22 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
+@NamedQueries({
+        @NamedQuery(
+                name = "Movie.retrieveMovieByTitleFragment",
+                query = "FROM Movie WHERE movieTitle LIKE: titleFragment"
+        ),
+        @NamedQuery(
+                name = "Movie.retrieveMovieByDirectorFragment",
+                query = "FROM Movie WHERE movieDirector LIKE : directorFragment"
+        ),
+        @NamedQuery(
+                name = "Movie.retrieveMovieByDescriptionFragment",
+                query = "FROM Movie WHERE movieDescription LIKE : descriptionFragment"
+        )
+})
 @Entity
 @Table(name ="MOVIES")
 @NoArgsConstructor
@@ -29,6 +44,7 @@ public class Movie {
     private String movieDirector;
 
     @NotNull
+    @Lob
     @Column(name = "MOVIE_DESCRIPTION")
     private String movieDescription;
 
@@ -69,5 +85,21 @@ public class Movie {
         this.movieDescription = movieDescription;
         this.movieType = movieType;
         this.movieYear = movieYear;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return movieYear == movie.movieYear &&
+                Objects.equals(movieTitle, movie.movieTitle) &&
+                Objects.equals(movieDirector, movie.movieDirector) &&
+                Objects.equals(movieDescription, movie.movieDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(movieTitle, movieDirector, movieDescription, movieYear);
     }
 }

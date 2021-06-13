@@ -1,8 +1,6 @@
 package com.movie.rental.store.domain.dto;
 
-import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.domain.enums.MediaType;
-import com.movie.rental.store.domain.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

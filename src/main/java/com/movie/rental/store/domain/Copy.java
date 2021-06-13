@@ -47,4 +47,10 @@ public class Copy {
         this.copyStatus = copyStatus;
         this.mediaType = mediaType;
     }
+
+    public Copy(@NotNull Movie movie, @NotNull Status copyStatus, @NotNull MediaType mediaType) {
+        this.movie = movie;
+        this.copyStatus = copyStatus;
+        this.mediaType = mediaType;
+    }
 }

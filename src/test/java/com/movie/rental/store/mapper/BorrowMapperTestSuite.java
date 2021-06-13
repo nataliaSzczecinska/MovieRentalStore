@@ -27,10 +27,10 @@ public class BorrowMapperTestSuite {
     @Test
     public void mapToBorrowTest() {
         //Given
-        Movie movie = new Movie(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
-        Copy copy = new Copy(1L, movie, Status.AVAILABLE, MediaType.BLU_RAY);
-        Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false);
         BorrowDto borrowDto = new BorrowDto(1L, 1L, 1L, LocalDate.of(2000, 10, 10), LocalDate.of(2000, 10, 13));
+        Movie movie = new Movie(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
+        Copy copy = new Copy(borrowDto.getCopyId(), movie, Status.AVAILABLE, MediaType.BLU_RAY);
+        Customer customer = new Customer(borrowDto.getCustomerId(), "mail@address.com", LocalDate.of(2000, 1, 1), false, null);
 
         //When
         Borrow borrow = borrowMapper.mapToBorrow(borrowDto, copy, customer);
@@ -50,7 +50,7 @@ public class BorrowMapperTestSuite {
         //Given
         Movie movie = new Movie(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
         Copy copy = new Copy(1L, movie, Status.AVAILABLE, MediaType.BLU_RAY);
-        Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false);
+        Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false, null);
         Borrow borrow = new Borrow(1L, copy, customer, LocalDate.of(2000, 10, 10), LocalDate.of(2000, 10, 13));
 
         //When
@@ -72,8 +72,8 @@ public class BorrowMapperTestSuite {
         Copy copy1 = new Copy(1L, movie1, Status.AVAILABLE, MediaType.BLU_RAY);
         Copy copy2 = new Copy(2L, movie1, Status.AVAILABLE, MediaType.DVD);
         Copy copy3 = new Copy(3L, movie2, Status.BORROWED, MediaType.DVD);
-        Customer customer1 = new Customer(1L, "mail1@address.com", LocalDate.of(2000, 1, 1), false);
-        Customer customer2 = new Customer(2L, "mail2@address.com", LocalDate.of(2001, 1, 1), false);
+        Customer customer1 = new Customer(1L, "mail1@address.com", LocalDate.of(2000, 1, 1), false, null);
+        Customer customer2 = new Customer(2L, "mail2@address.com", LocalDate.of(2001, 1, 1), false, null);
         Borrow borrow1 = new Borrow(1L, copy1, customer1, LocalDate.of(2001, 10, 10), LocalDate.of(2001, 10, 13));
         Borrow borrow2 = new Borrow(2L, copy2, customer2, LocalDate.of(2002, 10, 10), LocalDate.of(2002, 10, 13));
         Borrow borrow3 = new Borrow(3L, copy3, customer2, LocalDate.of(2003, 10, 10), LocalDate.of(2003, 10, 13));

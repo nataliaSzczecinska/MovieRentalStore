@@ -1,14 +1,15 @@
 package com.movie.rental.store.facade;
 
-import com.movie.rental.store.domain.Copy;
 import com.movie.rental.store.domain.dto.MovieDto;
 import com.movie.rental.store.domain.enums.Type;
 import com.movie.rental.store.exception.MovieNotFoundException;
 import com.movie.rental.store.mapper.MovieMapper;
+import com.movie.rental.store.repository.MovieRepository;
 import com.movie.rental.store.service.CopyDbService;
 import com.movie.rental.store.service.MovieDbService;
 import com.movie.rental.store.service.archive.DeleteCopyDbService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,21 +32,15 @@ public class MovieFacade {
     }
 
     public List<MovieDto> getMoviesByTitle(final String title) {
-        return movieMapper.mapToMovieDtoList(movieDbService.getAllMovie().stream()
-                .filter(movie -> movie.getMovieTitle().contains(title))
-                .collect(Collectors.toList()));
+        return movieMapper.mapToMovieDtoList(movieDbService.searchMovieByTitle(title));
     }
 
     public List<MovieDto> getMoviesByDirector(final String director) {
-        return movieMapper.mapToMovieDtoList(movieDbService.getAllMovie().stream()
-                .filter(movie -> movie.getMovieDirector().contains(director))
-                .collect(Collectors.toList()));
+        return movieMapper.mapToMovieDtoList(movieDbService.searchMovieByDirector(director));
     }
 
     public List<MovieDto> getMoviesByDescription(final String description) {
-        return movieMapper.mapToMovieDtoList(movieDbService.getAllMovie().stream()
-                .filter(movie -> movie.getMovieDescription().contains(description))
-                .collect(Collectors.toList()));
+        return movieMapper.mapToMovieDtoList(movieDbService.searchMovieByDescription(description));
     }
 
     public List<MovieDto> getMoviesByYear(final int year) {

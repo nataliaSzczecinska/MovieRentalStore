@@ -56,24 +56,6 @@ public class MovieController {
         return movieFacade.getMoviesByType(movieType);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByFilmweb")
-    public List<MovieDto> getMoviesByFilmweb() {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Movie by filmweb 1", "Director 1", "Description", Type.COMEDY, 2000));
-        movieList.add(new MovieDto(2L, "Movie by filmweb 2", "Director 2", "Description", Type.ACTION, 1999));
-        movieList.add(new MovieDto(3L, "Movie by filmweb 3", "Director 3", "Description", Type.ACTION, 2020));
-        return movieList;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByImdb")
-    public List<MovieDto> getMoviesByImdb() {
-        List<MovieDto> movieList = new ArrayList<>();
-        movieList.add(new MovieDto(1L, "Movie by imdb 1", "Director 1", "Description", Type.ACTION, 2000));
-        movieList.add(new MovieDto(2L, "Movie by imdb 2", "Director 2", "Description", Type.ADVENTURE, 1999));
-        movieList.add(new MovieDto(3L, "Movie by imdb 3", "Director 3", "Description", Type.ANIMATED, 2020));
-        return movieList;
-    }
-
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createMovie(@RequestBody MovieDto movieDto) {
         LOGGER.info("The new movie has just been created");

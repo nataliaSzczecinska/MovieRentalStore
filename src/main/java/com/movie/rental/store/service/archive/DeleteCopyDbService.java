@@ -20,7 +20,7 @@ public class DeleteCopyDbService {
         return deleteCopyRepository.findById(deleteCopyId);
     }
 
-    public DeleteCopy saveDeletedMovie(final DeleteCopy deleteCopy) {
+    public DeleteCopy saveDeletedCopy(final DeleteCopy deleteCopy) {
         return deleteCopyRepository.save(deleteCopy);
     }
 }

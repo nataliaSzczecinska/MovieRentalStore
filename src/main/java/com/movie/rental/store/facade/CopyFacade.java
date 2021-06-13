@@ -9,6 +9,7 @@ import com.movie.rental.store.domain.enums.Status;
 import com.movie.rental.store.exception.CopyNotFoundException;
 import com.movie.rental.store.exception.MovieNotFoundException;
 import com.movie.rental.store.mapper.CopyMapper;
+import com.movie.rental.store.mapper.archive.ToArchiveMapper;
 import com.movie.rental.store.service.CopyDbService;
 import com.movie.rental.store.service.MovieDbService;
 import com.movie.rental.store.service.archive.DeleteCopyDbService;
@@ -26,6 +27,7 @@ public class CopyFacade {
     private final CopyMapper copyMapper;
     private final MovieDbService movieDbService;
     private final DeleteCopyDbService deleteCopyDbService;
+    private final ToArchiveMapper toArchiveMapper;
 
 
     public List<CopyDto> getAllCopies() {
@@ -100,8 +102,8 @@ public class CopyFacade {
     public void deleteCopy(final Long copyId) throws CopyNotFoundException, MovieNotFoundException {
         Copy copy = copyDbService.getCopyById(copyId).orElseThrow(CopyNotFoundException::new);
         Movie movie = movieDbService.getMovieById(copy.getMovie().getMovieId()).orElseThrow(MovieNotFoundException::new);
-        DeleteCopy deleteCopy = new DeleteCopy(copyId, movie, copy.getMediaType(), LocalDate.now());
-        deleteCopyDbService.saveDeletedMovie(deleteCopy);
+        DeleteCopy deleteCopy = toArchiveMapper.mapToDeleteCopy(copy, LocalDate.now());
+        deleteCopyDbService.saveDeletedCopy(deleteCopy);
         copyDbService.deleteCopyById(copyId);
     }
 }

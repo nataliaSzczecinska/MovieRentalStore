@@ -1,9 +1,7 @@
 package com.movie.rental.store.service.archive;
 
 import com.movie.rental.store.domain.archive.BorrowArchive;
-import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.repository.archive.BorrowArchiveRepository;
-import com.movie.rental.store.repository.archive.DeleteCopyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +24,7 @@ public class BorrowArchiveDbService {
         return borrowArchiveRepository.save(borrowArchive);
     }
 
+    public List<BorrowArchive> searchBorrowArchiveByCustomerId(final Long customerId) {
+        return borrowArchiveRepository.retrieveBorrowArchiveByCustomerId(customerId);
+    }
 }

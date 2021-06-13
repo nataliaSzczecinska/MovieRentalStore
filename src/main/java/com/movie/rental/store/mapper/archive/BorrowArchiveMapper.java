@@ -1,5 +1,6 @@
 package com.movie.rental.store.mapper.archive;
 
+import com.movie.rental.store.domain.Customer;
 import com.movie.rental.store.domain.archive.BorrowArchive;
 import com.movie.rental.store.domain.dto.BorrowArchiveDto;
 import org.slf4j.Logger;

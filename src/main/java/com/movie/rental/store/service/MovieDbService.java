@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.movie.rental.store.facade.sql.SQLCondition.sqlCondition;
+
 @RequiredArgsConstructor
 @Service
 public class MovieDbService {
@@ -22,5 +24,17 @@ public class MovieDbService {
 
     public Movie saveMovie(final Movie movie) {
         return movieRepository.save(movie);
+    }
+
+    public List<Movie> searchMovieByTitle(String titleFragment){
+        return movieRepository.retrieveMovieByTitleFragment(sqlCondition(titleFragment));
+    }
+
+    public List<Movie> searchMovieByDirector(String directorFragment){
+        return movieRepository.retrieveMovieByDirectorFragment(sqlCondition(directorFragment));
+    }
+
+    public List<Movie> searchMovieByDescription(String directorFragment){
+        return movieRepository.retrieveMovieByDescriptionFragment(sqlCondition(directorFragment));
     }
 }

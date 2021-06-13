@@ -10,10 +10,12 @@ import com.movie.rental.store.exception.BorrowNotFoundException;
 import com.movie.rental.store.exception.CopyNotFoundException;
 import com.movie.rental.store.exception.CustomerNotFoundException;
 import com.movie.rental.store.mapper.BorrowMapper;
+import com.movie.rental.store.mapper.archive.ToArchiveMapper;
 import com.movie.rental.store.service.BorrowDbService;
 import com.movie.rental.store.service.CopyDbService;
 import com.movie.rental.store.service.CustomerDbService;
 import com.movie.rental.store.service.archive.BorrowArchiveDbService;
+import com.movie.rental.store.validator.BorrowValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,9 @@ public class BorrowFacade {
     private final CopyDbService copyDbService;
     private final CustomerDbService customerDbService;
     private final BorrowArchiveDbService borrowArchiveDbService;
+    private final ToArchiveMapper toArchiveMapper;
+    private final BorrowValidator borrowValidator;
+
 
     public List<BorrowDto> getBorrowsByMovieId(final Long movieId) {
         return borrowMapper.mapToBorrowDtoList(borrowDbService.getAllBorrows().stream()
@@ -57,8 +62,10 @@ public class BorrowFacade {
 
     public void borrowIsFinished(final Long borrowId, final String finishReason) throws BorrowNotFoundException {
         Borrow borrow = borrowDbService.getBorrowById(borrowId).orElseThrow(BorrowNotFoundException::new);
-        BorrowArchive borrowArchive = new BorrowArchive(borrowId, borrow.getCopy().getCopyId(), borrow.getCustomer().getCustomerId(), borrow.getBorrowDate(), borrow.getReturnDate(), LocalDate.now(), BorrowArchiveType.valueOf(finishReason));
+        LocalDate returnDate = borrowValidator.getReturnDateOfBorrow(BorrowArchiveType.valueOf(finishReason));
+        BorrowArchive borrowArchive = toArchiveMapper.mapToBorrowArchive(borrow, returnDate, BorrowArchiveType.valueOf(finishReason));
         borrowArchiveDbService.saveBorrowArchive(borrowArchive);
+        borrowValidator.deleteCopyIfItLostOrDestroy(finishReason, borrow);
         borrowDbService.deleteBorrow(borrowId);
     }
 }

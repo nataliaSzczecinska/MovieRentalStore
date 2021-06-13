@@ -39,4 +39,11 @@ public class Borrow {
     @NotNull
     @Column (name = "RETURN_DATE")
     private LocalDate returnDate;
+
+    public Borrow(@NotNull Copy copy, @NotNull Customer customer, @NotNull LocalDate borrowDate, @NotNull LocalDate returnDate) {
+        this.copy = copy;
+        this.customer = customer;
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+    }
 }

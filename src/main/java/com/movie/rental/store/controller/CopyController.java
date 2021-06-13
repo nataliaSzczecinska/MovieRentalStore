@@ -1,7 +1,5 @@
 package com.movie.rental.store.controller;
 
-import com.movie.rental.store.domain.enums.MediaType;
-import com.movie.rental.store.domain.enums.Status;
 import com.movie.rental.store.domain.dto.CopyDto;
 import com.movie.rental.store.exception.CopyNotFoundException;
 import com.movie.rental.store.exception.MovieNotFoundException;
