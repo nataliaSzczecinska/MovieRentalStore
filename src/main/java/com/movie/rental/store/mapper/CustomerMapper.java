@@ -16,19 +16,23 @@ public class CustomerMapper {
 
     public Customer mapToCustomer (final CustomerDto customerDto, List<Borrow> borrows) {
         LOGGER.info("Map CustomerDto to Customer");
-        return new Customer(customerDto.getCustomerId(),
-                customerDto.getCustomerMailAddress(),
-                customerDto.getCreateAccountDate(),
-                customerDto.isBlocked(),
-                borrows);
+        return  Customer.builder()
+                .customerId(customerDto.getCustomerId())
+                .customerMailAddress(customerDto.getCustomerMailAddress())
+                .createAccountDate(customerDto.getCreateAccountDate())
+                .isBlocked(customerDto.isBlocked())
+                .borrows(borrows)
+                .build();
     }
 
     public CustomerDto mapToCustomerDto (final Customer customer) {
         LOGGER.info("Map Customer to CustomerDto");
-        return new CustomerDto(customer.getCustomerId(),
-                customer.getCustomerMailAddress(),
-                customer.getCreateAccountDate(),
-                customer.isBlocked());
+        return  CustomerDto.builder()
+                .customerId(customer.getCustomerId())
+                .customerMailAddress(customer.getCustomerMailAddress())
+                .createAccountDate(customer.getCreateAccountDate())
+                .isBlocked(customer.isBlocked())
+                .build();
     }
 
     public List<CustomerDto> mapToCustomerDtoList (final List<Customer> customers) {

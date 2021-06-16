@@ -16,26 +16,30 @@ public class BorrowArchiveMapper {
 
     public BorrowArchive mapToBorrowArchive(final BorrowArchiveDto borrowArchiveDto) {
         LOGGER.info("Map BorrowArchiveDto to BorrowArchive");
-        return new BorrowArchive(borrowArchiveDto.getBorrowArchiveId(),
-                borrowArchiveDto.getPreviousBorrowId(),
-                borrowArchiveDto.getCopyId(),
-                borrowArchiveDto.getCustomerId(),
-                borrowArchiveDto.getBorrowDate(),
-                borrowArchiveDto.getReturnDate(),
-                borrowArchiveDto.getRealReturnDate(),
-                borrowArchiveDto.getBorrowArchiveType());
+        return BorrowArchive.builder()
+                .borrowArchiveId(borrowArchiveDto.getBorrowArchiveId())
+                .previousBorrowId(borrowArchiveDto.getPreviousBorrowId())
+                .copyId(borrowArchiveDto.getCopyId())
+                .customerId(borrowArchiveDto.getCustomerId())
+                .borrowDate(borrowArchiveDto.getBorrowDate())
+                .returnDate(borrowArchiveDto.getReturnDate())
+                .realReturnDate(borrowArchiveDto.getRealReturnDate())
+                .borrowArchiveType(borrowArchiveDto.getBorrowArchiveType())
+                .build();
     }
 
     public BorrowArchiveDto mapToBorrowArchiveDto(final BorrowArchive borrowArchive) {
         LOGGER.info("Map BorrowArchive to BorrowArchiveDto");
-        return new BorrowArchiveDto(borrowArchive.getBorrowArchiveId(),
-                borrowArchive.getPreviousBorrowId(),
-                borrowArchive.getCopyId(),
-                borrowArchive.getCustomerId(),
-                borrowArchive.getBorrowDate(),
-                borrowArchive.getReturnDate(),
-                borrowArchive.getRealReturnDate(),
-                borrowArchive.getBorrowArchiveType());
+        return  BorrowArchiveDto.builder()
+                .borrowArchiveId(borrowArchive.getBorrowArchiveId())
+                .previousBorrowId(borrowArchive.getPreviousBorrowId())
+                .copyId(borrowArchive.getCopyId())
+                .customerId(borrowArchive.getCustomerId())
+                .borrowDate(borrowArchive.getBorrowDate())
+                .returnDate(borrowArchive.getReturnDate())
+                .realReturnDate(borrowArchive.getRealReturnDate())
+                .borrowArchiveType(borrowArchive.getBorrowArchiveType())
+                .build();
     }
 
     public List<BorrowArchiveDto> mapToBorrowArchiveDtoList(final List<BorrowArchive> borrowArchiveList) {

@@ -10,7 +10,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class BorrowArchiveDbService {
-    private BorrowArchiveRepository borrowArchiveRepository;
+    private final BorrowArchiveRepository borrowArchiveRepository;
 
     public List<BorrowArchive> getAllBorrowArchive() {
         return borrowArchiveRepository.findAll();

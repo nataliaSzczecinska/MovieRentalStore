@@ -10,7 +10,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class DeleteCopyDbService {
-    private DeleteCopyRepository deleteCopyRepository;
+    private final DeleteCopyRepository deleteCopyRepository;
 
     public List<DeleteCopy> getAllDeletedCopies() {
         return deleteCopyRepository.findAll();

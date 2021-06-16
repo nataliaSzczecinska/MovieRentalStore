@@ -15,22 +15,26 @@ public class DeleteCustomerMapper {
 
     public DeleteCustomer mapToDeleteCustomer(final DeleteCustomerDto deleteCustomerDto) {
         LOGGER.info("Map DeleteCustomerDto to DeleteCustomer");
-        return new DeleteCustomer(deleteCustomerDto.getDeleteCustomerId(),
-                deleteCustomerDto.getPreviousCustomerId(),
-                deleteCustomerDto.getCustomerMailAddress(),
-                deleteCustomerDto.getCreateAccountDate(),
-                deleteCustomerDto.isBlocked(),
-                deleteCustomerDto.getDeleteAccountDate());
+        return DeleteCustomer.builder()
+                .deleteCustomerId(deleteCustomerDto.getDeleteCustomerId())
+                .previousCustomerId(deleteCustomerDto.getPreviousCustomerId())
+                .customerMailAddress(deleteCustomerDto.getCustomerMailAddress())
+                .createAccountDate(deleteCustomerDto.getCreateAccountDate())
+                .isBlocked(deleteCustomerDto.isBlocked())
+                .deleteAccountDate(deleteCustomerDto.getDeleteAccountDate())
+                .build();
     }
 
     public DeleteCustomerDto mapToDeleteCustomerDto(final DeleteCustomer deleteCustomer) {
         LOGGER.info("Map DeleteCustomer to DeleteCustomerDto");
-        return new DeleteCustomerDto (deleteCustomer.getDeleteCustomerId(),
-                deleteCustomer.getPreviousCustomerId(),
-                deleteCustomer.getCustomerMailAddress(),
-                deleteCustomer.getCreateAccountDate(),
-                deleteCustomer.isBlocked(),
-                deleteCustomer.getDeleteAccountDate());
+        return DeleteCustomerDto.builder()
+                .deleteCustomerId(deleteCustomer.getDeleteCustomerId())
+                .previousCustomerId(deleteCustomer.getPreviousCustomerId())
+                .customerMailAddress(deleteCustomer.getCustomerMailAddress())
+                .createAccountDate(deleteCustomer.getCreateAccountDate())
+                .isBlocked(deleteCustomer.isBlocked())
+                .deleteAccountDate(deleteCustomer.getDeleteAccountDate())
+                .build();
     }
 
     public List<DeleteCustomerDto> mapToDeleteCustomerDtoList(final List<DeleteCustomer> deleteCustomers) {

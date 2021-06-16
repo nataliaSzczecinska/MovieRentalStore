@@ -2,15 +2,13 @@ package com.movie.rental.store.domain.archive;
 
 import com.movie.rental.store.domain.Movie;
 import com.movie.rental.store.domain.enums.MediaType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@Builder
 @Entity
 @Table(name = "DELETED_COPIES")
 @NoArgsConstructor

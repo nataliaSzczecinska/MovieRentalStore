@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
+@Builder
 @Entity
 @Table(name ="COPIES")
 @NoArgsConstructor

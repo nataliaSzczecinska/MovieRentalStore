@@ -23,5 +23,5 @@ public interface BorrowArchiveRepository extends CrudRepository<BorrowArchive, L
     public BorrowArchive save(BorrowArchive borrowArchive);
 
     @Query
-    public List<BorrowArchive> retrieveBorrowArchiveByCustomerId(@Param("id") Long id);
+    public List<BorrowArchive> retrieveBorrowArchiveByCustomerId(@Param("CUSTOMER_ID") Long customerId);
 }

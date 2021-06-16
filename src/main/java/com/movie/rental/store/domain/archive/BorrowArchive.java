@@ -1,10 +1,7 @@
 package com.movie.rental.store.domain.archive;
 
 import com.movie.rental.store.domain.enums.BorrowArchiveType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,8 +9,9 @@ import java.time.LocalDate;
 
 @NamedQuery(
         name = "BorrowArchive.retrieveBorrowArchiveByCustomerId",
-        query = "FROM BorrowArchive WHERE customerId = id"
+        query = "FROM BorrowArchive WHERE customerId = CUSTOMER_ID"
 )
+@Builder
 @Entity
 @Table(name = "BORROWS_ARCHIVE")
 @NoArgsConstructor
@@ -62,5 +60,19 @@ public class BorrowArchive {
         this.returnDate = returnDate;
         this.realReturnDate = realReturnDate;
         this.borrowArchiveType = borrowArchiveType;
+    }
+
+    @Override
+    public String toString() {
+        return "BorrowArchive{" +
+                "borrowArchiveId=" + borrowArchiveId +
+                ", previousBorrowId=" + previousBorrowId +
+                ", copyId=" + copyId +
+                ", customerId=" + customerId +
+                ", borrowDate=" + borrowDate +
+                ", returnDate=" + returnDate +
+                ", realReturnDate=" + realReturnDate +
+                ", borrowArchiveType=" + borrowArchiveType +
+                '}';
     }
 }

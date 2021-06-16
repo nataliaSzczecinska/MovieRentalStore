@@ -24,6 +24,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name ="MOVIES")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

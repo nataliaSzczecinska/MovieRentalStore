@@ -16,20 +16,24 @@ public class BorrowMapper {
 
     public Borrow mapToBorrow (final BorrowDto borrowDto, final Copy copy, final Customer customer) {
         LOGGER.info("Map BorrowDto to Borrow");
-        return new Borrow(borrowDto.getBorrowId(),
-                copy,
-                customer,
-                borrowDto.getBorrowDate(),
-                borrowDto.getReturnDate());
+        return  Borrow.builder()
+                .borrowId(borrowDto.getBorrowId())
+                .copy(copy)
+                .customer(customer)
+                .borrowDate(borrowDto.getBorrowDate())
+                .returnDate(borrowDto.getReturnDate())
+                .build();
     }
 
     public BorrowDto mapToBorrowDto (final Borrow borrow) {
         LOGGER.info("Map Borrow to BorrowDto");
-        return new BorrowDto(borrow.getBorrowId(),
-                borrow.getCopy().getCopyId(),
-                borrow.getCustomer().getCustomerId(),
-                borrow.getBorrowDate(),
-                borrow.getReturnDate());
+        return  BorrowDto.builder()
+                .borrowId(borrow.getBorrowId())
+                .copyId(borrow.getCopy().getCopyId())
+                .customerId(borrow.getCustomer().getCustomerId())
+                .borrowDate(borrow.getBorrowDate())
+                .returnDate(borrow.getReturnDate())
+                .build();
     }
 
     public List<BorrowDto> mapToBorrowDtoList (final List<Borrow> borrowList) {

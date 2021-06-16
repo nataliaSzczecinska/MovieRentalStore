@@ -2,11 +2,9 @@ package com.movie.rental.store.domain.dto;
 
 import com.movie.rental.store.domain.enums.MediaType;
 import com.movie.rental.store.domain.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

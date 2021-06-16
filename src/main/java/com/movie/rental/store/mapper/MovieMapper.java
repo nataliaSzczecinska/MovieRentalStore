@@ -16,24 +16,29 @@ public class MovieMapper {
 
     public Movie mapToMovie(final MovieDto movieDto, final List<Copy> copies, final List<DeleteCopy> deleteCopies) {
         LOGGER.info("Map MovieDto to Movie");
-        return new Movie(movieDto.getMovieId(),
-                movieDto.getMovieTitle(),
-                movieDto.getMovieDirector(),
-                movieDto.getMovieDescription(),
-                movieDto.getMovieType(),
-                movieDto.getMovieYear(),
-                copies,
-                deleteCopies);
+        return  Movie.builder()
+                .movieId(movieDto.getMovieId())
+                .movieTitle(movieDto.getMovieTitle())
+                .movieDirector(movieDto.getMovieDirector())
+                .movieDescription(movieDto.getMovieDescription())
+                .movieType(movieDto.getMovieType())
+                .movieYear(movieDto.getMovieYear())
+                .copies(copies)
+                .deleteCopies(deleteCopies)
+                .build();
     }
 
     public MovieDto mapToMovieDto (final Movie movie) {
         LOGGER.info("Map Movie to MovieDto");
-        return new MovieDto(movie.getMovieId(),
-                movie.getMovieTitle(),
-                movie.getMovieDirector(),
-                movie.getMovieDescription(),
-                movie.getMovieType(),
-                movie.getMovieYear());
+        return  MovieDto.builder()
+                .movieId(movie.getMovieId())
+                .movieTitle(movie.getMovieTitle())
+                .movieDirector(movie.getMovieDirector())
+                .movieDescription(movie.getMovieDescription())
+                .movieType(movie.getMovieType())
+                .movieYear(movie.getMovieYear())
+                .build();
+
     }
 
     public List<MovieDto> mapToMovieDtoList (final List<Movie> movieList) {

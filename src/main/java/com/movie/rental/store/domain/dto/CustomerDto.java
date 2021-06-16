@@ -1,12 +1,10 @@
 package com.movie.rental.store.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,4 +14,8 @@ public class CustomerDto {
     private String customerMailAddress;
     private LocalDate createAccountDate;
     private boolean isBlocked;
+
+    public CustomerDto(String customerMailAddress) {
+        this.customerMailAddress = customerMailAddress;
+    }
 }

@@ -1,8 +1,6 @@
 package com.movie.rental.store.service;
 
-import com.movie.rental.store.domain.Copy;
 import com.movie.rental.store.domain.Customer;
-import com.movie.rental.store.repository.CopyRepository;
 import com.movie.rental.store.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

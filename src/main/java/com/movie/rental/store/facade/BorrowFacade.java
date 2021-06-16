@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 public class BorrowFacade {
     private final BorrowMapper borrowMapper;
     private final BorrowDbService borrowDbService;
-    private final CopyDbService copyDbService;
-    private final CustomerDbService customerDbService;
     private final BorrowArchiveDbService borrowArchiveDbService;
     private final ToArchiveMapper toArchiveMapper;
     private final BorrowValidator borrowValidator;
@@ -37,20 +35,18 @@ public class BorrowFacade {
 
     public List<BorrowDto> getBorrowsByMovieId(final Long movieId) {
         return borrowMapper.mapToBorrowDtoList(borrowDbService.getAllBorrows().stream()
-                .filter(borrow -> borrow.getCopy().getMovie().getMovieId() == movieId)
+                .filter(borrow -> borrow.getCopy().getMovie().getMovieId().equals(movieId))
                 .collect(Collectors.toList()));
     }
 
     public List<BorrowDto> getBorrowsByUserId(final Long userId) {
         return borrowMapper.mapToBorrowDtoList(borrowDbService.getAllBorrows().stream()
-                .filter(borrow -> borrow.getCustomer().getCustomerId() == userId)
+                .filter(borrow -> borrow.getCustomer().getCustomerId().equals(userId))
                 .collect(Collectors.toList()));
     }
 
     public void createBorrow(final BorrowDto borrowDto) throws CopyNotFoundException, CustomerNotFoundException {
-        Copy copy = copyDbService.getCopyById(borrowDto.getCopyId()).orElseThrow(CopyNotFoundException::new);
-        Customer customer = customerDbService.getCustomerById(borrowDto.getCustomerId()).orElseThrow(CustomerNotFoundException::new);
-        borrowDbService.saveBorrow(borrowMapper.mapToBorrow(borrowDto, copy, customer));
+        borrowValidator.createBorrowIfPossible(borrowDto);
     }
 
     public BorrowDto changeBorrowReturnDate(final String newBorrowDateText, final Long borrowId) throws BorrowNotFoundException {

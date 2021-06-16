@@ -1,7 +1,7 @@
 package com.movie.rental.store.facade;
 
+import com.movie.rental.store.domain.Borrow;
 import com.movie.rental.store.domain.Copy;
-import com.movie.rental.store.domain.Movie;
 import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.domain.dto.CopyDto;
 import com.movie.rental.store.domain.enums.MediaType;
@@ -10,6 +10,7 @@ import com.movie.rental.store.exception.CopyNotFoundException;
 import com.movie.rental.store.exception.MovieNotFoundException;
 import com.movie.rental.store.mapper.CopyMapper;
 import com.movie.rental.store.mapper.archive.ToArchiveMapper;
+import com.movie.rental.store.service.BorrowDbService;
 import com.movie.rental.store.service.CopyDbService;
 import com.movie.rental.store.service.MovieDbService;
 import com.movie.rental.store.service.archive.DeleteCopyDbService;
@@ -28,7 +29,7 @@ public class CopyFacade {
     private final MovieDbService movieDbService;
     private final DeleteCopyDbService deleteCopyDbService;
     private final ToArchiveMapper toArchiveMapper;
-
+    private final BorrowDbService borrowDbService;
 
     public List<CopyDto> getAllCopies() {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies());
@@ -36,7 +37,7 @@ public class CopyFacade {
 
     public List<CopyDto> getAllCopiesByMovie(final Long movieId) {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies().stream()
-        .filter(copy -> copy.getMovie().getMovieId() == movieId)
+        .filter(copy -> copy.getMovie().getMovieId().equals(movieId))
         .collect(Collectors.toList()));
     }
 
@@ -48,7 +49,7 @@ public class CopyFacade {
 
     public List<CopyDto> getAvailableCopiesByMovie(final Long movieId) {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies().stream()
-                .filter(copy -> copy.getMovie().getMovieId() == movieId)
+                .filter(copy -> copy.getMovie().getMovieId().equals(movieId))
                 .filter(copy -> copy.getCopyStatus().equals(Status.AVAILABLE))
                 .collect(Collectors.toList()));
     }
@@ -56,7 +57,7 @@ public class CopyFacade {
     public List<CopyDto> getDVDCopiesByMovie(final Long movieId) {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies().stream()
                 .filter(copy -> copy.getMediaType().equals(MediaType.DVD))
-                .filter(copy -> copy.getMovie().getMovieId() == movieId)
+                .filter(copy -> copy.getMovie().getMovieId().equals(movieId))
                 .collect(Collectors.toList()));
     }
 
@@ -64,14 +65,14 @@ public class CopyFacade {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies().stream()
                 .filter(copy -> copy.getMediaType().equals(MediaType.DVD))
                 .filter(copy -> copy.getCopyStatus().equals(Status.AVAILABLE))
-                .filter(copy -> copy.getMovie().getMovieId() == movieId)
+                .filter(copy -> copy.getMovie().getMovieId().equals(movieId))
                 .collect(Collectors.toList()));
     }
 
     public List<CopyDto> getBluRayCopiesByMovie(final Long movieId) {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies().stream()
                 .filter(copy -> copy.getMediaType().equals(MediaType.BLU_RAY))
-                .filter(copy -> copy.getMovie().getMovieId() == movieId)
+                .filter(copy -> copy.getMovie().getMovieId().equals(movieId))
                 .collect(Collectors.toList()));
     }
 
@@ -79,7 +80,7 @@ public class CopyFacade {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies().stream()
                 .filter(copy -> copy.getMediaType().equals(MediaType.BLU_RAY))
                 .filter(copy -> copy.getCopyStatus().equals(Status.AVAILABLE))
-                .filter(copy -> copy.getMovie().getMovieId() == movieId)
+                .filter(copy -> copy.getMovie().getMovieId().equals(movieId))
                 .collect(Collectors.toList()));
     }
 
@@ -88,20 +89,27 @@ public class CopyFacade {
     }
 
     public void createCopy(final CopyDto copyDto) throws MovieNotFoundException {
+        List<Borrow> borrows = borrowDbService.getAllBorrows().stream()
+                .filter(borrow -> borrow.getCopy().getCopyId().equals(copyDto.getCopyId()))
+                .collect(Collectors.toList());
         copyDbService.saveCopy(copyMapper
                 .mapToCopy(copyDto, movieDbService.getMovieById(copyDto
-                        .getMovieId()).orElseThrow(MovieNotFoundException::new)));
+                        .getMovieId()).orElseThrow(MovieNotFoundException::new),
+                        borrows));
     }
 
     public CopyDto updateCopy(final CopyDto copyDto) throws MovieNotFoundException {
+        List<Borrow> borrows = borrowDbService.getAllBorrows().stream()
+                .filter(borrow -> borrow.getCopy().getCopyId().equals(copyDto.getCopyId()))
+                .collect(Collectors.toList());
         return copyMapper.mapToCopyDto(copyDbService.saveCopy(copyMapper
                 .mapToCopy(copyDto, movieDbService.getMovieById(copyDto
-                        .getMovieId()).orElseThrow(MovieNotFoundException::new))));
+                        .getMovieId()).orElseThrow(MovieNotFoundException::new),
+                        borrows)));
     }
 
-    public void deleteCopy(final Long copyId) throws CopyNotFoundException, MovieNotFoundException {
+    public void deleteCopy(final Long copyId) throws CopyNotFoundException {
         Copy copy = copyDbService.getCopyById(copyId).orElseThrow(CopyNotFoundException::new);
-        Movie movie = movieDbService.getMovieById(copy.getMovie().getMovieId()).orElseThrow(MovieNotFoundException::new);
         DeleteCopy deleteCopy = toArchiveMapper.mapToDeleteCopy(copy, LocalDate.now());
         deleteCopyDbService.saveDeletedCopy(deleteCopy);
         copyDbService.deleteCopyById(copyId);

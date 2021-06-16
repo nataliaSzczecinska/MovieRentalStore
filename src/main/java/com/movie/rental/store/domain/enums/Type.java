@@ -6,6 +6,7 @@ public enum Type {
     ANIMATED,
     COMEDY,
     CRIMINAL,
+    DRAMA_MOVIE,
     FAMILY,
     FANTASY,
     HORROR,

@@ -28,7 +28,7 @@ public class CopyMapperTestSuite {
         Movie movie = new Movie(1L, "Test title", "Test director", "Test description", Type.ACTION, 2000);
 
         //When
-        Copy copy = copyMapper.mapToCopy(copyDto, movie);
+        Copy copy = copyMapper.mapToCopy(copyDto, movie, null);
 
         //Then
         assertEquals(1L, copy.getCopyId());

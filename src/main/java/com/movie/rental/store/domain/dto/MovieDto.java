@@ -1,13 +1,9 @@
 package com.movie.rental.store.domain.dto;
 
 import com.movie.rental.store.domain.enums.Type;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.*;
-
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -4,12 +4,10 @@ import com.movie.rental.store.domain.dto.MovieDto;
 import com.movie.rental.store.domain.enums.Type;
 import com.movie.rental.store.exception.MovieNotFoundException;
 import com.movie.rental.store.mapper.MovieMapper;
-import com.movie.rental.store.repository.MovieRepository;
 import com.movie.rental.store.service.CopyDbService;
 import com.movie.rental.store.service.MovieDbService;
 import com.movie.rental.store.service.archive.DeleteCopyDbService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -62,10 +60,10 @@ public class MovieFacade {
     public MovieDto updateMovie(final MovieDto movieDto) {
         return movieMapper.mapToMovieDto(movieDbService.saveMovie(movieMapper.mapToMovie(movieDto,
                 copyDbService.getAllCopies().stream()
-                        .filter(copy -> copy.getMovie().getMovieId() == movieDto.getMovieId())
+                        .filter(copy -> copy.getMovie().getMovieId().equals(movieDto.getMovieId()))
                         .collect(Collectors.toList()),
                 deleteCopyDbService.getAllDeletedCopies().stream()
-                        .filter(deleteCopy -> deleteCopy.getMovie().getMovieId() == movieDto.getMovieId())
+                        .filter(deleteCopy -> deleteCopy.getMovie().getMovieId().equals(movieDto.getMovieId()))
                         .collect(Collectors.toList()))));
     }
 }

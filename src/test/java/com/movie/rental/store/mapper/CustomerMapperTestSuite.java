@@ -21,7 +21,7 @@ public class CustomerMapperTestSuite {
     @Test
     public void mapToCustomerDtoTest() {
         //Given
-        Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false, null);
+        Customer customer = new Customer(1L, "mail@address.com", LocalDate.of(2000, 1, 1), false);
 
         //When
         CustomerDto customerDto = customerMapper.mapToCustomerDto(customer);
@@ -51,9 +51,9 @@ public class CustomerMapperTestSuite {
     @Test
     public void mapToCustomerDtoListTest() {
         //Given
-        Customer customer1 = new Customer(1L, "mail1@address.com", LocalDate.of(2001, 1, 1), false, null);
-        Customer customer2 = new Customer(2L, "mail2@address.com", LocalDate.of(2002, 1, 1), false, null);
-        Customer customer3 = new Customer(3L, "mail3@address.com", LocalDate.of(2003, 1, 1), true, null);
+        Customer customer1 = new Customer(1L, "mail1@address.com", LocalDate.of(2001, 1, 1), false);
+        Customer customer2 = new Customer(2L, "mail2@address.com", LocalDate.of(2002, 1, 1), false);
+        Customer customer3 = new Customer(3L, "mail3@address.com", LocalDate.of(2003, 1, 1), true);
         List<Customer> customers = Arrays.asList(customer1, customer2, customer3);
 
         //When

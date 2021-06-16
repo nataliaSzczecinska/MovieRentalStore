@@ -16,20 +16,24 @@ public class DeleteCopyMapper {
 
     public DeleteCopy mapToDeleteCopy(final DeleteCopyDto deleteCopyDto, final Movie movie) {
         LOGGER.info("Map DeleteCopyDto to DeleteCopy");
-        return new DeleteCopy(deleteCopyDto.getDeleteCopyId(),
-                deleteCopyDto.getPreviousCopyId(),
-                movie,
-                deleteCopyDto.getMediaType(),
-                deleteCopyDto.getDeleteDate());
+        return  DeleteCopy.builder()
+                .deleteCopyId(deleteCopyDto.getDeleteCopyId())
+                .previousCopyId(deleteCopyDto.getPreviousCopyId())
+                .movie(movie)
+                .mediaType(deleteCopyDto.getMediaType())
+                .deleteDate(deleteCopyDto.getDeleteDate())
+                .build();
     }
 
     public DeleteCopyDto mapToDeleteCopyDto(final DeleteCopy deleteCopy) {
         LOGGER.info("Map DeleteCopy to DeleteCopyDto");
-        return new DeleteCopyDto(deleteCopy.getDeleteCopyId(),
-                deleteCopy.getPreviousCopyId(),
-                deleteCopy.getMovie().getMovieId(),
-                deleteCopy.getMediaType(),
-                deleteCopy.getDeleteDate());
+        return DeleteCopyDto.builder()
+                .deleteCopyId(deleteCopy.getDeleteCopyId())
+                .previousCopyId(deleteCopy.getPreviousCopyId())
+                .movieId(deleteCopy.getMovie().getMovieId())
+                .mediaType(deleteCopy.getMediaType())
+                .deleteDate(deleteCopy.getDeleteDate())
+                .build();
     }
 
     public List<DeleteCopyDto> mapToDeleteCopyDtoList(final List<DeleteCopy> deleteCopyList) {
