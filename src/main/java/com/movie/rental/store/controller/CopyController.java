@@ -86,7 +86,7 @@ public class CopyController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{copyId}")
-    public void deleteCopy(@PathVariable Long copyId) throws MovieNotFoundException, CopyNotFoundException {
+    public void deleteCopy(@PathVariable Long copyId) throws CopyNotFoundException {
         LOGGER.info("The copy has just been deleted");
         copyFacade.deleteCopy(copyId);
     }

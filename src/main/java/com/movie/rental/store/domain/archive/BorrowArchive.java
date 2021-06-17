@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @NamedQuery(
         name = "BorrowArchive.retrieveBorrowArchiveByCustomerId",
-        query = "FROM BorrowArchive WHERE customerId = CUSTOMER_ID"
+        query = "FROM BorrowArchive WHERE customerId = :CUSTOMER_ID"
 )
 @Builder
 @Entity

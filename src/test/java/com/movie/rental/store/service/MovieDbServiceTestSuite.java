@@ -116,7 +116,7 @@ public class MovieDbServiceTestSuite {
     @Test
     public void getMovieByTitleTest() {
         //Given
-        List<Long> ids = saveMoviesInDatabase(movies);
+        saveMoviesInDatabase(movies);
 
         //When
         List<Movie> movieList = movieDbService.searchMovieByTitle("wod");
@@ -131,7 +131,7 @@ public class MovieDbServiceTestSuite {
     @Test
     public void getMovieByDirectorTest() {
         //Given
-        List<Long> ids = saveMoviesInDatabase(movies);
+        saveMoviesInDatabase(movies);
 
         //When
         List<Movie> movieList = movieDbService.searchMovieByDirector("ler");
@@ -146,7 +146,7 @@ public class MovieDbServiceTestSuite {
     @Test
     public void getMovieByDescriptionTest() {
         //Given
-        List<Long> ids = saveMoviesInDatabase(movies);
+        saveMoviesInDatabase(movies);
 
         //When
         List<Movie> movieList = movieDbService.searchMovieByDescription("abcd");
@@ -161,7 +161,7 @@ public class MovieDbServiceTestSuite {
     @Test
     public void saveMovieTest() {
         //Given
-        List<Long> ids = saveMoviesInDatabase(movies);
+        saveMoviesInDatabase(movies);
         Movie movie = new Movie("Save test movie",
                 "Test director",
                 "Test description",

@@ -1,6 +1,7 @@
 package com.movie.rental.store.controller;
 
 import com.movie.rental.store.domain.dto.CustomerDto;
+import com.movie.rental.store.exception.CustomerAlreadyExistException;
 import com.movie.rental.store.exception.CustomerNotFoundException;
 import com.movie.rental.store.facade.CustomerFacade;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -26,11 +26,12 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{customerId}")
     public CustomerDto getCustomerById(@PathVariable Long customerId) throws CustomerNotFoundException {
+        LOGGER.info("Get customer by id");
         return customerFacade.getCustomerById(customerId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/createCustomer")
-    public void createCustomer(@RequestParam String mailAddress) {
+    public void createCustomer(@RequestParam String mailAddress) throws CustomerAlreadyExistException {
         LOGGER.info("The new customer has been created");
         customerFacade.createCustomer(mailAddress);
     }

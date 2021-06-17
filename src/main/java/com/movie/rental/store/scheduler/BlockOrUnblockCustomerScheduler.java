@@ -32,6 +32,7 @@ public class BlockOrUnblockCustomerScheduler {
                 LOGGER.info("Customer with id " + borrow.getCustomer().getCustomerId() + " is blocked now");
                 Customer customer = borrow.getCustomer();
                 customer.setBlocked(true);
+                customerDbService.saveCustomer(customer);
             }
         }
     }

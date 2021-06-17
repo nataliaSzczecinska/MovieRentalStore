@@ -12,8 +12,6 @@ import com.movie.rental.store.exception.CustomerNotFoundException;
 import com.movie.rental.store.mapper.BorrowMapper;
 import com.movie.rental.store.mapper.archive.ToArchiveMapper;
 import com.movie.rental.store.service.BorrowDbService;
-import com.movie.rental.store.service.CopyDbService;
-import com.movie.rental.store.service.CustomerDbService;
 import com.movie.rental.store.service.archive.BorrowArchiveDbService;
 import com.movie.rental.store.validator.BorrowValidator;
 import lombok.RequiredArgsConstructor;

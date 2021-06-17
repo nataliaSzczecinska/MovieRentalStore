@@ -1,6 +1,5 @@
 package com.movie.rental.store.controller;
 
-import com.movie.rental.store.domain.enums.Type;
 import com.movie.rental.store.domain.dto.MovieDto;
 import com.movie.rental.store.exception.MovieNotFoundException;
 import com.movie.rental.store.facade.MovieFacade;

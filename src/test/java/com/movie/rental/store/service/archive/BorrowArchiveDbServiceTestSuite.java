@@ -166,7 +166,7 @@ public class BorrowArchiveDbServiceTestSuite {
         }
 
         //Then
-        //assertEquals(3, borrowArchiveListByCustomer.size());
+        assertEquals(3, borrowArchiveListByCustomer.size());
 
         //Clean-up
         borrowArchiveRepository.deleteAll();
