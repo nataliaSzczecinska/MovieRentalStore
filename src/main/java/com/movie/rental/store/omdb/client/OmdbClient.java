@@ -20,8 +20,8 @@ public class OmdbClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(OmdbClient.class);
     private final RestTemplate restTemplate;
 
-    /*@Value("${omdb.api.endpoint}")
-    private String omdbApiEndpoint;
+    /*@Value("${omdb.api.url}")
+    private String omdbApiUrl;
 
     @Value("${omdb.api.key}")
     private String omdbKey;*/

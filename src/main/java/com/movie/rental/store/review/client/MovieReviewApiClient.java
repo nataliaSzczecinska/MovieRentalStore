@@ -1,7 +1,42 @@
 package com.movie.rental.store.review.client;
 
-public class MovieReviewApiClient {
-    //https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=godfather&api-key=JpPhqyTSCVN5r2KC4s53ClVGvNSZqLIg
+import com.movie.rental.store.exception.TitleNotFoundInOMDbException;
+import com.movie.rental.store.omdb.client.OmdbClient;
+import com.movie.rental.store.review.domain.MovieReviewDto;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-    //odesłanie do recenzji filmu - o ile taka jest, poprzez wyświetlenie skruconego opisu i linku do artykułu
+import java.net.URI;
+
+import java.util.*;
+
+@Component
+@RequiredArgsConstructor
+public class MovieReviewApiClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OmdbClient.class);
+    private final RestTemplate restTemplate;
+
+    /*@Value("${review.api.url}")
+    private String reviewApiUrl;
+
+    @Value("${review.api.key}")
+    private String reviewKey;*/
+
+    public MovieReviewDto getMovieReview(String title) throws TitleNotFoundInOMDbException {
+        URI url = UriComponentsBuilder.fromHttpUrl("https://api.nytimes.com/svc/movies/v2/reviews/search.json")
+                .queryParam("api-key", "JpPhqyTSCVN5r2KC4s53ClVGvNSZqLIg")
+                .queryParam("query", title)
+                .build()
+                .encode()
+                .toUri();
+        LOGGER.info("The url address to movie review api: " + url);
+        MovieReviewDto movieReviewRespond = restTemplate.getForObject(url, MovieReviewDto.class);
+
+        return Optional.ofNullable(movieReviewRespond).orElseThrow(TitleNotFoundInOMDbException::new);
+    }
 }
