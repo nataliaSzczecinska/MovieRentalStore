@@ -1,40 +1,42 @@
 package com.movie.rental.store.omdb.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.util.*;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieOmdbDto {
+    @JsonProperty("Title")
     private String title;
+
+    @JsonProperty("Year")
     private int year;
-    private String rated;
-    private String released;
-    private String runtime;
+
+    @JsonProperty("Genre")
     private String genre;
+
+    @JsonProperty("Director")
     private String director;
-    private String writer;
+
+    @JsonProperty("Actors")
     private String actors;
+
+    @JsonProperty("Plot")
     private String plot;
-    private String language;
-    private String country;
+
+    @JsonProperty("Awards")
     private String awards;
-    private String poster;
-    private List<RatingsDto> ratings;
-    private int metascore;
-    private double imdbRating;
-    private String imdbVotes;
-    private String imdbId;
-    private String type;
-    private String DVD;
-    private String boxOffice;
+
+    @JsonProperty("Production")
     private String production;
-    private String website;
-    private boolean response;
+
+    @JsonProperty("Ratings")
+    private List<RatingsDto> ratings;
 }

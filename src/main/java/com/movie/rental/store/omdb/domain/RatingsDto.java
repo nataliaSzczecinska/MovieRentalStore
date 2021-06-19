@@ -1,15 +1,19 @@
 package com.movie.rental.store.omdb.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RatingsDto {
-    private String Source;
-    private String Value;
+    @JsonProperty("Source")
+    private String source;
+
+    @JsonProperty("Value")
+    private String value;
 }

@@ -1,9 +1,14 @@
 package com.movie.rental.store.service.archive;
 
+import com.movie.rental.store.domain.Copy;
 import com.movie.rental.store.domain.Movie;
 import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.domain.enums.MediaType;
+import com.movie.rental.store.domain.enums.Status;
 import com.movie.rental.store.domain.enums.Type;
+import com.movie.rental.store.exception.CopyNotFoundException;
+import com.movie.rental.store.facade.CopyFacade;
+import com.movie.rental.store.repository.CopyRepository;
 import com.movie.rental.store.repository.MovieRepository;
 import com.movie.rental.store.repository.archive.DeleteCopyRepository;
 import org.junit.jupiter.api.Test;
@@ -30,6 +35,12 @@ public class DeleteCopyDbServiceTestSuite {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private CopyRepository copyRepository;
+
+    @Autowired
+    private CopyFacade copyFacade;
 
     private Movie movie = Movie.builder()
             .movieTitle("Movie title for test")
@@ -132,6 +143,44 @@ public class DeleteCopyDbServiceTestSuite {
         assertTrue(deleteCopyOptional.isPresent());
         assertEquals(2, deleteCopiesBeforeAdd.size());
         assertEquals(3, deleteCopiesAfterAdd.size());
+
+        //Clean-up
+        deleteCopyRepository.deleteAll();
+        movieRepository.deleteAll();
+    }
+
+    @Test
+    public void searchDeleteCopyByPreviousCopyId() throws CopyNotFoundException {
+        //Given
+        movieRepository.save(movie);
+        Copy copy1 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        Copy copy2 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        copyRepository.save(copy1);
+        copyRepository.save(copy2);
+        Long copy1Id = copy1.getCopyId();
+        Long copy2Id = copy2.getCopyId();
+        List<DeleteCopy> deleteCopies = exampleDeleteCopy();
+        saveDeleteCopyInDatabase(deleteCopies);
+        copyFacade.deleteCopy(copy1Id);
+        copyFacade.deleteCopy(copy2Id);
+
+        //When
+        List<DeleteCopy> deleteCopiesFromDb = deleteCopyDbService.getAllDeletedCopies();
+        Optional<DeleteCopy> deleteCopy1Optional = deleteCopyDbService.searchDeleteCopyByPreviousCopyId(copy1Id);
+        Optional<DeleteCopy> deleteCopy2Optional = deleteCopyDbService.searchDeleteCopyByPreviousCopyId(copy2Id);
+
+        //Then
+        assertTrue(deleteCopy1Optional.isPresent());
+        assertTrue(deleteCopy2Optional.isPresent());
+        assertEquals(4, deleteCopiesFromDb.size());
 
         //Clean-up
         deleteCopyRepository.deleteAll();

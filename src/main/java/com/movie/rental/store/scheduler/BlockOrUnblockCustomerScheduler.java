@@ -29,7 +29,7 @@ public class BlockOrUnblockCustomerScheduler {
 
         for (Borrow borrow : borrows) {
             if(Duration.between(borrow.getReturnDate().atStartOfDay(), LocalDate.now().atStartOfDay()).toDays() >= 2) {
-                LOGGER.info("Customer with id " + borrow.getCustomer().getCustomerId() + " is blocked now");
+                LOGGER.info("Customer with id {} is blocked now", borrow.getCustomer().getCustomerId());
                 Customer customer = borrow.getCustomer();
                 customer.setBlocked(true);
                 customerDbService.saveCustomer(customer);
@@ -40,12 +40,12 @@ public class BlockOrUnblockCustomerScheduler {
     @Scheduled(cron = "0 0 1 * * *")
     public void unblockCustomerIfTheyReturnAllOverdueCopies() {
         List<Customer> customers = customerDbService.getAllCustomers().stream()
-                .filter(customer -> customer.isBlocked())
+                .filter(Customer::isBlocked)
                 .collect(Collectors.toList());
 
         for (Customer customer : customers) {
             if(isCustomershouldBeUnblock(customer)) {
-                LOGGER.info("Customer with id " + customer.getCustomerId() + " is unblocked now");
+                LOGGER.info("Customer with id {} is unblocked now", customer.getCustomerId());
                 customer.setBlocked(false);
                 customerDbService.saveCustomer(customer);
             }

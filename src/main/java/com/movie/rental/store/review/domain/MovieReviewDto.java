@@ -1,5 +1,7 @@
 package com.movie.rental.store.review.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +13,8 @@ import java.util.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieReviewDto {
-    private String status;
-    private String copyright;
-    private boolean has_more;
-    private int num_results;
+    @JsonProperty("results")
     private List<ResultDto> results;
 }

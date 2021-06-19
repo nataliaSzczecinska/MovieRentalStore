@@ -38,7 +38,7 @@ public class CopyMapper {
     public List<CopyDto> mapToCopyDtoList (final List<Copy> copies) {
         LOGGER.info("Map CopyList to CopyDtoList");
         return copies.stream()
-                .map(copy -> mapToCopyDto(copy))
+                .map(this::mapToCopyDto)
                 .collect(Collectors.toList());
     }
 

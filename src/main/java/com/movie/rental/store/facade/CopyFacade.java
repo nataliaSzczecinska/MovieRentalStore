@@ -14,6 +14,7 @@ import com.movie.rental.store.service.BorrowDbService;
 import com.movie.rental.store.service.CopyDbService;
 import com.movie.rental.store.service.MovieDbService;
 import com.movie.rental.store.service.archive.DeleteCopyDbService;
+import com.movie.rental.store.validator.CopyValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class CopyFacade {
     private final DeleteCopyDbService deleteCopyDbService;
     private final ToArchiveMapper toArchiveMapper;
     private final BorrowDbService borrowDbService;
+    private final CopyValidator copyValidator;
 
     public List<CopyDto> getAllCopies() {
         return copyMapper.mapToCopyDtoList(copyDbService.getAllCopies());
@@ -89,13 +91,10 @@ public class CopyFacade {
     }
 
     public void createCopy(final CopyDto copyDto) throws MovieNotFoundException {
-        List<Borrow> borrows = borrowDbService.getAllBorrows().stream()
-                .filter(borrow -> borrow.getCopy().getCopyId().equals(copyDto.getCopyId()))
-                .collect(Collectors.toList());
         copyDbService.saveCopy(copyMapper
-                .mapToCopy(copyDto, movieDbService.getMovieById(copyDto
+                .mapToCopy(copyValidator.checkCorrectStatusToCreate(copyDto), movieDbService.getMovieById(copyDto
                         .getMovieId()).orElseThrow(MovieNotFoundException::new),
-                        borrows));
+                        new ArrayList<>()));
     }
 
     public CopyDto updateCopy(final CopyDto copyDto) throws MovieNotFoundException {

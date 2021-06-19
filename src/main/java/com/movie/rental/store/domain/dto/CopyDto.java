@@ -14,4 +14,9 @@ public class CopyDto {
     private Long movieId;
     private Status copyStatus;
     private MediaType mediaType;
+
+    public CopyDto(Long movieId, MediaType mediaType) {
+        this.movieId = movieId;
+        this.mediaType = mediaType;
+    }
 }

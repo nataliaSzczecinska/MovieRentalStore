@@ -20,11 +20,11 @@ public class OmdbClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(OmdbClient.class);
     private final RestTemplate restTemplate;
 
-    /*@Value("${omdb.api.url}")
+    @Value("${omdb.api.url}")
     private String omdbApiUrl;
 
     @Value("${omdb.api.key}")
-    private String omdbKey;*/
+    private String omdbKey;
 
     public MovieOmdbDto getMovieOmdb(String title) throws TitleNotFoundInOMDbException {
         URI url = UriComponentsBuilder.fromHttpUrl("http://www.omdbapi.com/")
@@ -34,7 +34,7 @@ public class OmdbClient {
                 .build()
                 .encode()
                 .toUri();
-        LOGGER.info("The url address to omdb api: " + url);
+        LOGGER.info("The url address to omdb api: {}", url);
         MovieOmdbDto movieRespond = restTemplate.getForObject(url, MovieOmdbDto.class);
 
         return Optional.ofNullable(movieRespond).orElseThrow(TitleNotFoundInOMDbException::new);

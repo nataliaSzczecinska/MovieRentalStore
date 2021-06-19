@@ -23,4 +23,8 @@ public class DeleteCopyDbService {
     public DeleteCopy saveDeletedCopy(final DeleteCopy deleteCopy) {
         return deleteCopyRepository.save(deleteCopy);
     }
+
+    public Optional<DeleteCopy> searchDeleteCopyByPreviousCopyId(final Long previousCopyId) {
+        return deleteCopyRepository.retrieveDeleteCopyByPreviousCopyId(previousCopyId);
+    }
 }

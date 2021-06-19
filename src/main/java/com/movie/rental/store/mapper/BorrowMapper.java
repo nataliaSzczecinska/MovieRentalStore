@@ -39,7 +39,7 @@ public class BorrowMapper {
     public List<BorrowDto> mapToBorrowDtoList (final List<Borrow> borrowList) {
         LOGGER.info("Map BorrowList to BorrowDtoList");
         return borrowList.stream()
-                .map(borrow -> mapToBorrowDto(borrow))
+                .map(this::mapToBorrowDto)
                 .collect(Collectors.toList());
     }
 }

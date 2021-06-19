@@ -44,7 +44,7 @@ public class MovieMapper {
     public List<MovieDto> mapToMovieDtoList (final List<Movie> movieList) {
         LOGGER.info("Map MovieList to MovieDtoList");
         return movieList.stream()
-                .map(movie -> mapToMovieDto(movie))
+                .map(this::mapToMovieDto)
                 .collect(Collectors.toList());
     }
 }

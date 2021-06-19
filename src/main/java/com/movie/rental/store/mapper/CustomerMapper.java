@@ -2,7 +2,6 @@ package com.movie.rental.store.mapper;
 
 import com.movie.rental.store.domain.Borrow;
 import com.movie.rental.store.domain.Customer;
-import com.movie.rental.store.domain.archive.BorrowArchive;
 import com.movie.rental.store.domain.dto.CustomerDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +37,7 @@ public class CustomerMapper {
     public List<CustomerDto> mapToCustomerDtoList (final List<Customer> customers) {
         LOGGER.info("Map CustomerList to CustomerDtoList");
         return customers.stream()
-                .map(customer -> mapToCustomerDto(customer))
+                .map(this::mapToCustomerDto)
                 .collect(Collectors.toList());
     }
 }

@@ -1,27 +1,31 @@
 package com.movie.rental.store.review.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class ResultDto {
-    private String display_title;
-    private String mpaa_rating;
-    private int critics_pick;
-    private String byline;
+    @JsonProperty("display_title")
+    private String displayTitle;
+
+    @JsonProperty("mpaa_rating")
+    private String mpaaRating;
+
+    @JsonProperty("byline")
+    private String authorOfReview;
+
+    @JsonProperty("headline")
     private String headline;
-    private String summary_short;
-    private LocalDate publication_date;
-    private LocalDate opening_date;
-    private LocalDateTime date_updated;
+
+    @JsonProperty("summary_short")
+    private String summary;
+
+    @JsonProperty("link")
     private LinkDto link;
-    private MultimediaDto multimedia;
 }

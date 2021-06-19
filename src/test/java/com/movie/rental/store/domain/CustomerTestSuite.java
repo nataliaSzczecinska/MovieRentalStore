@@ -28,7 +28,7 @@ public class CustomerTestSuite {
         Long customerId = customer.getCustomerId();
 
         //Then
-        assertTrue(0L != customerId);
+        assertNotEquals(0L, customerId);
 
         //Clean-up
         customerRepository.deleteById(customerId);

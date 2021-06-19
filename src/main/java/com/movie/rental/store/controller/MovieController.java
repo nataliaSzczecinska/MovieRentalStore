@@ -18,52 +18,52 @@ public class MovieController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieController.class);
     private final MovieFacade movieFacade;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<MovieDto> getAllMovies() {
         LOGGER.info("Get all movies");
         return movieFacade.getAllMovies();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
+    @GetMapping(value = "/{movieId}")
     public MovieDto getMovieById(@PathVariable Long movieId) throws MovieNotFoundException {
-        LOGGER.info("Get movie by id " + movieId);
+        LOGGER.info("Get movie by id {}", movieId);
         return movieFacade.getMovieById(movieId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByTitle")
+    @GetMapping(value = "/movieByTitle")
     public List<MovieDto> getMoviesByTitle(@RequestParam String movieTitle) {
         return movieFacade.getMoviesByTitle(movieTitle);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByDirector")
+    @GetMapping(value = "/movieByDirector")
     public List<MovieDto> getMoviesByDirector(@RequestParam String movieDirector) {
         return movieFacade.getMoviesByDirector(movieDirector);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByDescription")
+    @GetMapping(value = "/movieByDescription")
     public List<MovieDto> getMoviesByDescription(@RequestParam String movieDescription) {
         return movieFacade.getMoviesByDescription(movieDescription);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByYear")
+    @GetMapping(value = "/movieByYear")
     public List<MovieDto> getMoviesByYear(@RequestParam int movieYear) {
         return movieFacade.getMoviesByYear(movieYear);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movieByType")
+    @GetMapping(value = "/movieByType")
     public List<MovieDto> getMoviesByType(@RequestParam String movieType) {
         return movieFacade.getMoviesByType(movieType);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createMovie(@RequestBody MovieDto movieDto) {
         LOGGER.info("The new movie has just been created");
         movieFacade.createMovie(movieDto);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public MovieDto updateMovie(@RequestBody MovieDto movieDto) {
-        LOGGER.info("The movie has just been updated");
+        LOGGER.info("The movie id {} has just been updated", movieDto.getMovieId());
         return movieFacade.updateMovie(movieDto);
     }
 }

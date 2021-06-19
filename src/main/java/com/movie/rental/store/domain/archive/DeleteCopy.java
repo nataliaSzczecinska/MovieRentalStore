@@ -8,6 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@NamedQuery(
+        name = "DeleteCopy.retrieveDeleteCopyByPreviousCopyId",
+        query = "FROM DeleteCopy WHERE previousCopyId = :PREVIOUS_COPY_ID"
+)
 @Builder
 @Entity
 @Table(name = "DELETED_COPIES")
