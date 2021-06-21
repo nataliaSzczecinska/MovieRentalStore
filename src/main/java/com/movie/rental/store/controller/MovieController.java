@@ -30,28 +30,28 @@ public class MovieController {
         return movieFacade.getMovieById(movieId);
     }
 
-    @GetMapping(value = "/movieByTitle")
-    public List<MovieDto> getMoviesByTitle(@RequestParam String movieTitle) {
+    @GetMapping(value = "/movieByTitle={movieTitle}")
+    public List<MovieDto> getMoviesByTitle(@PathVariable String movieTitle) {
         return movieFacade.getMoviesByTitle(movieTitle);
     }
 
-    @GetMapping(value = "/movieByDirector")
-    public List<MovieDto> getMoviesByDirector(@RequestParam String movieDirector) {
+    @GetMapping(value = "/movieByDirector={movieDirector}")
+    public List<MovieDto> getMoviesByDirector(@PathVariable String movieDirector) {
         return movieFacade.getMoviesByDirector(movieDirector);
     }
 
-    @GetMapping(value = "/movieByDescription")
-    public List<MovieDto> getMoviesByDescription(@RequestParam String movieDescription) {
+    @GetMapping(value = "/movieByDescription={movieDescription}")
+    public List<MovieDto> getMoviesByDescription(@PathVariable String movieDescription) {
         return movieFacade.getMoviesByDescription(movieDescription);
     }
 
-    @GetMapping(value = "/movieByYear")
-    public List<MovieDto> getMoviesByYear(@RequestParam int movieYear) {
+    @GetMapping(value = "/movieByYear={movieYear}")
+    public List<MovieDto> getMoviesByYear(@PathVariable int movieYear) {
         return movieFacade.getMoviesByYear(movieYear);
     }
 
-    @GetMapping(value = "/movieByType")
-    public List<MovieDto> getMoviesByType(@RequestParam String movieType) {
+    @GetMapping(value = "/movieByType={movieType}")
+    public List<MovieDto> getMoviesByType(@PathVariable String movieType) {
         return movieFacade.getMoviesByType(movieType);
     }
 

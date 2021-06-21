@@ -80,7 +80,7 @@ public class CopyController {
     }
 
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public CopyDto updateCopy(@RequestBody CopyDto copyDto) throws MovieNotFoundException {
+    public CopyDto updateCopy(@RequestBody CopyDto copyDto) throws MovieNotFoundException, CopyNotFoundException {
         LOGGER.info("The copy has just been updated");
         return copyFacade.updateCopy(copyDto);
     }

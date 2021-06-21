@@ -1,6 +1,5 @@
 package com.movie.rental.store.service.archive;
 
-import com.movie.rental.store.domain.Borrow;
 import com.movie.rental.store.domain.archive.BorrowArchive;
 import com.movie.rental.store.domain.enums.BorrowArchiveType;
 import com.movie.rental.store.repository.archive.BorrowArchiveRepository;

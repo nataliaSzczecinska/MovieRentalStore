@@ -94,21 +94,20 @@ public class CopyFacade {
         copyDbService.saveCopy(copyMapper
                 .mapToCopy(copyValidator.checkCorrectStatusToCreate(copyDto), movieDbService.getMovieById(copyDto
                         .getMovieId()).orElseThrow(MovieNotFoundException::new),
-                        new ArrayList<>()));
+                        null));
     }
 
-    public CopyDto updateCopy(final CopyDto copyDto) throws MovieNotFoundException {
-        List<Borrow> borrows = borrowDbService.getAllBorrows().stream()
-                .filter(borrow -> borrow.getCopy().getCopyId().equals(copyDto.getCopyId()))
-                .collect(Collectors.toList());
+    public CopyDto updateCopy(final CopyDto copyDto) throws MovieNotFoundException, CopyNotFoundException {
         return copyMapper.mapToCopyDto(copyDbService.saveCopy(copyMapper
                 .mapToCopy(copyDto, movieDbService.getMovieById(copyDto
                         .getMovieId()).orElseThrow(MovieNotFoundException::new),
-                        borrows)));
+                        copyDbService.getCopyById(copyDto.getCopyId()).orElseThrow(CopyNotFoundException::new)
+                                .getBorrow())));
     }
 
     public void deleteCopy(final Long copyId) throws CopyNotFoundException {
         Copy copy = copyDbService.getCopyById(copyId).orElseThrow(CopyNotFoundException::new);
+        copyValidator.createBorrowArchiveIfDeleteTheCopyWithIsBorrowNow(copy);
         DeleteCopy deleteCopy = toArchiveMapper.mapToDeleteCopy(copy, LocalDate.now());
         deleteCopyDbService.saveDeletedCopy(deleteCopy);
         copyDbService.deleteCopyById(copyId);

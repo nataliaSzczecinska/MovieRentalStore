@@ -21,7 +21,13 @@ public class MovieTestSuite {
     @Test
     public void saveMovieTest() {
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
 
         //When
         movieRepository.save(movie);
@@ -29,7 +35,6 @@ public class MovieTestSuite {
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
         //Then
-        System.out.println("The movie " + movieId);
         assertTrue(movieOptional.isPresent());
 
         //Clean-up
@@ -39,9 +44,27 @@ public class MovieTestSuite {
     @Test
     public void findAllMoviesTest() {
         //Given
-        Movie movie1 = new Movie("Title Test 1", "Director Test 1", "Description Test 1", Type.ACTION, 2000);
-        Movie movie2 = new Movie("Title Test 2", "Director Test 2", "Description Test 2", Type.FANTASY, 2010);
-        Movie movie3 = new Movie("Title Test 3", "Director Test 3", "Description Test 3", Type.HORROR, 2007);
+        Movie movie1 = Movie.builder()
+                .movieTitle("Title Test 1")
+                .movieDirector("Director Test 1")
+                .movieDescription("Description Test 1")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Movie movie2 = Movie.builder()
+                .movieTitle("Title Test 2")
+                .movieDirector("Director Test 2")
+                .movieDescription("Description Test 2")
+                .movieType(Type.FANTASY)
+                .movieYear(2010)
+                .build();
+        Movie movie3 = Movie.builder()
+                .movieTitle("Title Test 3")
+                .movieDirector("Director Test 3")
+                .movieDescription("Description Test 3")
+                .movieType(Type.HORROR)
+                .movieYear(2007)
+                .build();
 
         movieRepository.save(movie1);
         movieRepository.save(movie2);
@@ -67,7 +90,13 @@ public class MovieTestSuite {
     @Test
     public void findMovieByIdTest() {
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test 1")
+                .movieDirector("Director Test 1")
+                .movieDescription("Description Test 1")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
 
         //When
         movieRepository.save(movie);

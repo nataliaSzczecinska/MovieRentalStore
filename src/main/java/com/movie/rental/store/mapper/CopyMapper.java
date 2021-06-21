@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 public class CopyMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(CopyMapper.class);
 
-    public Copy mapToCopy (final CopyDto copyDto, final Movie movie, List<Borrow> borrows) {
+    public Copy mapToCopy (final CopyDto copyDto, final Movie movie, Borrow borrow) {
         LOGGER.info("Map CopyDto to Copy");
         return  Copy.builder()
                 .copyId(copyDto.getCopyId())
                 .movie(movie)
                 .copyStatus(copyDto.getCopyStatus())
                 .mediaType(copyDto.getMediaType())
-                .borrow(borrows)
+                .borrow(borrow)
                 .build();
     }
 

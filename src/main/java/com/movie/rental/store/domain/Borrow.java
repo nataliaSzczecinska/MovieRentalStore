@@ -21,7 +21,7 @@ public class Borrow {
     private Long borrowId;
 
     @NotNull
-    @ManyToOne
+    @OneToOne
     @JoinColumn (name = "COPY_ID")
     private Copy copy;
 

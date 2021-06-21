@@ -36,10 +36,29 @@ public class BorrowTestSuite {
     @Test
     public void saveBorrowTest() {
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
-        Borrow borrow = new Borrow(copy, customer, LocalDate.of(2001, 1, 11), LocalDate.of(2002, 2, 12));
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
+        Borrow borrow = Borrow.builder()
+                .copy(copy)
+                .customer(customer)
+                .borrowDate(LocalDate.of(2001, 1, 11))
+                .returnDate(LocalDate.of(2002, 2, 12))
+                .build();
         customer.setBorrows(Arrays.asList(borrow));
 
         //When
@@ -66,10 +85,30 @@ public class BorrowTestSuite {
     @Test
     public void deleteBorrowTest() {
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
-        Borrow borrow = new Borrow(copy, customer, LocalDate.of(2001, 1, 11), LocalDate.of(2002, 2, 12));
+        //Given
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
+        Borrow borrow = Borrow.builder()
+                .copy(copy)
+                .customer(customer)
+                .borrowDate(LocalDate.of(2001, 1, 11))
+                .returnDate(LocalDate.of(2002, 2, 12))
+                .build();
         customer.setBorrows(Arrays.asList(borrow));
 
         //When
@@ -98,12 +137,40 @@ public class BorrowTestSuite {
     @Test
     public void findAllBorrowsTest() {
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy1 = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
-        Copy copy2 = new Copy(movie, Status.AVAILABLE, MediaType.BLU_RAY);
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
-        Borrow borrow1 = new Borrow(copy1, customer, LocalDate.of(2001, 1, 11), LocalDate.of(2002, 2, 12));
-        Borrow borrow2 = new Borrow(copy1, customer, LocalDate.of(2002, 2, 12), LocalDate.of(2003, 3, 13));
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy1 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        Copy copy2 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.BLU_RAY)
+                .build();
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
+        Borrow borrow1 = Borrow.builder()
+                .copy(copy1)
+                .customer(customer)
+                .borrowDate(LocalDate.of(2001, 1, 11))
+                .returnDate(LocalDate.of(2002, 2, 12))
+                .build();
+        Borrow borrow2 = Borrow.builder()
+                .copy(copy2)
+                .customer(customer)
+                .borrowDate(LocalDate.of(2002, 2, 12))
+                .returnDate(LocalDate.of(2003, 3, 13))
+                .build();
         customer.setBorrows(Arrays.asList(borrow1, borrow2));
 
         //When
@@ -138,12 +205,41 @@ public class BorrowTestSuite {
     @Test
     public void customerAndCopyAndBorrowConnectionTest() {
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy1 = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
-        Copy copy2 = new Copy(movie, Status.AVAILABLE, MediaType.BLU_RAY);
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
-        Borrow borrow1 = new Borrow(copy1, customer, LocalDate.of(2001, 1, 11), LocalDate.of(2002, 2, 12));
-        Borrow borrow2 = new Borrow(copy2, customer, LocalDate.of(2002, 2, 12), LocalDate.of(2003, 3, 13));
+        //Given
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy1 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        Copy copy2 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.BLU_RAY)
+                .build();
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
+        Borrow borrow1 = Borrow.builder()
+                .copy(copy1)
+                .customer(customer)
+                .borrowDate(LocalDate.of(2001, 1, 11))
+                .returnDate(LocalDate.of(2002, 2, 12))
+                .build();
+        Borrow borrow2 = Borrow.builder()
+                .copy(copy2)
+                .customer(customer)
+                .borrowDate(LocalDate.of(2002, 2, 12))
+                .returnDate(LocalDate.of(2003, 3, 13))
+                .build();
         customer.setBorrows(Arrays.asList(borrow1, borrow2));
 
         //When

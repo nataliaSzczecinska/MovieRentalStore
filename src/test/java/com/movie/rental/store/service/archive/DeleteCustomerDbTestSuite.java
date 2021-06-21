@@ -1,9 +1,6 @@
 package com.movie.rental.store.service.archive;
 
-import com.movie.rental.store.domain.archive.DeleteCopy;
 import com.movie.rental.store.domain.archive.DeleteCustomer;
-import com.movie.rental.store.domain.enums.MediaType;
-import com.movie.rental.store.mapper.archive.DeleteCustomerMapper;
 import com.movie.rental.store.repository.archive.DeleteCustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

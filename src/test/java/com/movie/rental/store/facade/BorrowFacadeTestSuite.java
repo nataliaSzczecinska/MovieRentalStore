@@ -43,12 +43,6 @@ public class BorrowFacadeTestSuite {
     private BorrowRepository borrowRepository;
 
     @Autowired
-    private DeleteCopyRepository deleteCopyRepository;
-
-    @Autowired
-    private BorrowArchiveRepository borrowArchiveRepository;
-
-    @Autowired
     private BorrowFacade borrowFacade;
 
     private Movie movie1 = Movie.builder()

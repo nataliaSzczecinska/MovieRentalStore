@@ -21,7 +21,11 @@ public class CustomerTestSuite {
     @Test
     public void saveCustomerTest() {
         //Given
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
 
         //When
         customerRepository.save(customer);
@@ -37,7 +41,11 @@ public class CustomerTestSuite {
     @Test
     public void getCustomerByIdTest() {
         //Given
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
 
         //When
         customerRepository.save(customer);
@@ -55,7 +63,11 @@ public class CustomerTestSuite {
     @Test
     public void deleteCustomerTest() {
         //Given
-        Customer customer = new Customer("mail@address.com", LocalDate.of(2000, 1, 1), false);
+        Customer customer = Customer.builder()
+                .customerMailAddress("mail@address.com")
+                .createAccountDate(LocalDate.of(2000, 1, 1))
+                .isBlocked(false)
+                .build();
 
         //When
         customerRepository.save(customer);
@@ -75,9 +87,21 @@ public class CustomerTestSuite {
     @Test
     public void getAllCustomersTest() {
         //Given
-        Customer customer1 = new Customer("mail1@address.com", LocalDate.of(2001, 1, 1), false);
-        Customer customer2 = new Customer("mail2@address.com", LocalDate.of(2002, 1, 1), false);
-        Customer customer3 = new Customer("mail3@address.com", LocalDate.of(2003, 1, 1), true);
+        Customer customer1 = Customer.builder()
+                .customerMailAddress("mail1@address.com")
+                .createAccountDate(LocalDate.of(2001, 1, 1))
+                .isBlocked(false)
+                .build();
+        Customer customer2 = Customer.builder()
+                .customerMailAddress("mail2@address.com")
+                .createAccountDate(LocalDate.of(2002, 1, 1))
+                .isBlocked(false)
+                .build();
+        Customer customer3 = Customer.builder()
+                .customerMailAddress("mail3@address.com")
+                .createAccountDate(LocalDate.of(2003, 1, 1))
+                .isBlocked(true)
+                .build();
 
         //When
         customerRepository.save(customer1);

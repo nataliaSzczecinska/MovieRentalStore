@@ -27,8 +27,18 @@ public class CopyTestSuite {
     @Test
     public void saveCopyTest(){
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
 
         //When
         movieRepository.save(movie);
@@ -48,8 +58,18 @@ public class CopyTestSuite {
     @Test
     public void deleteCopyTest(){
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
 
         //When
         movieRepository.save(movie);
@@ -71,9 +91,18 @@ public class CopyTestSuite {
     @Test
     public void findCopyByIdTest(){
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
-
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
 
         //When
         movieRepository.save(movie);
@@ -93,9 +122,23 @@ public class CopyTestSuite {
     @Test
     public void movieAndCopyConnectionTest(){
         //Given
-        Movie movie = new Movie("Title Test", "Director Test", "Description Test", Type.ACTION, 2000);
-        Copy copy1 = new Copy(movie, Status.AVAILABLE, MediaType.DVD);
-        Copy copy2 = new Copy(movie, Status.BORROWED, MediaType.BLU_RAY);
+        Movie movie = Movie.builder()
+                .movieTitle("Title Test")
+                .movieDirector("Director Test")
+                .movieDescription("Description Test")
+                .movieType(Type.ACTION)
+                .movieYear(2000)
+                .build();
+        Copy copy1 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.AVAILABLE)
+                .mediaType(MediaType.DVD)
+                .build();
+        Copy copy2 = Copy.builder()
+                .movie(movie)
+                .copyStatus(Status.BORROWED)
+                .mediaType(MediaType.BLU_RAY)
+                .build();
         movie.setCopies(Arrays.asList(copy1, copy2));
 
         //When
@@ -117,6 +160,7 @@ public class CopyTestSuite {
         assertEquals(movie, copy2Optional.get().getMovie());
         assertEquals(movie.getMovieId(), copy2Optional.get().getMovie().getMovieId());
         assertEquals(2, movie.getCopies().size());
+        assertTrue(movieOptional.isPresent());
 
         //Clean-up
         copyRepository.deleteAll();

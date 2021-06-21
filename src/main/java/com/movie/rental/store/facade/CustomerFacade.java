@@ -5,12 +5,15 @@ import com.movie.rental.store.domain.dto.CustomerDto;
 import com.movie.rental.store.exception.CustomerAlreadyExistException;
 import com.movie.rental.store.exception.CustomerNotFoundException;
 import com.movie.rental.store.mapper.CustomerMapper;
+import com.movie.rental.store.mapper.archive.ToArchiveMapper;
 import com.movie.rental.store.service.CustomerDbService;
+import com.movie.rental.store.service.archive.DeleteCustomerDbService;
 import com.movie.rental.store.validator.CustomerValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -19,6 +22,8 @@ public class CustomerFacade {
     private final CustomerDbService customerDbService;
     private final CustomerMapper customerMapper;
     private final CustomerValidator customerValidator;
+    private final DeleteCustomerDbService deleteCustomerDbService;
+    private final ToArchiveMapper toArchiveMapper;
 
     public List<CustomerDto> getAllCustomers() {
         return customerMapper.mapToCustomerDtoList(customerDbService.getAllCustomers());
@@ -32,14 +37,13 @@ public class CustomerFacade {
         customerValidator.createCustomerIfPossible(mailAddress);
     }
 
-    public CustomerDto updateCustomer(Long customerId, String newMailAddress) throws CustomerNotFoundException {
+    public CustomerDto updateCustomer(Long customerId, String newMailAddress) throws CustomerNotFoundException, CustomerAlreadyExistException {
         Customer customer = customerDbService.getCustomerById(customerId).orElseThrow(CustomerNotFoundException::new);
-        customer.setCustomerMailAddress(newMailAddress);
-        return customerMapper.mapToCustomerDto(customerDbService.saveCustomer(customer));
+        return customerMapper.mapToCustomerDto(customerValidator.updateCustomerIfPossible(customer, newMailAddress));
     }
 
-    public void deleteCustomer(@PathVariable Long customerId) {
-        customerDbService.deleteCustomerById(customerId);
+    public void deleteCustomer(@PathVariable Long customerId) throws CustomerNotFoundException {
+        customerValidator.deleteCustomerIfPossible(customerId);
     }
 
 }

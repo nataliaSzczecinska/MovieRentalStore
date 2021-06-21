@@ -35,12 +35,12 @@ public class Copy {
     @Column(name = "MEDIA_TYPE")
     private MediaType mediaType;
 
-    @OneToMany (
+    @OneToOne /*(
             targetEntity = Borrow .class,
             mappedBy = "copy",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Borrow> borrow;
+            optional = true)*/
+    @JoinColumn (name = "BORROW_ID")
+    private Borrow borrow;
 
     public Copy(@NotNull Long copyId, @NotNull Movie movie, @NotNull Status copyStatus, @NotNull MediaType mediaType) {
         this.copyId = copyId;

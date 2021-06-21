@@ -32,19 +32,19 @@ public class CustomerController {
 
     @PostMapping
     public void createCustomer(@RequestParam String mailAddress) throws CustomerAlreadyExistException {
-        LOGGER.info("The new customer has been created");
+        LOGGER.info("The new customer has been created if possible");
         customerFacade.createCustomer(mailAddress);
     }
 
-    @PutMapping(value = "/updateCustomer/{customerId}")
-    public CustomerDto updateCustomer(@PathVariable Long customerId, @RequestParam String newMailAddress) throws CustomerNotFoundException {
-        LOGGER.info("The customer has just been updated");
+    @PutMapping(value = "/{customerId}/{newMailAddress}")
+    public CustomerDto updateCustomer(@PathVariable Long customerId, @PathVariable String newMailAddress) throws CustomerNotFoundException, CustomerAlreadyExistException {
+        LOGGER.info("The customer will be updated if possible");
         return customerFacade.updateCustomer(customerId, newMailAddress);
     }
 
     @DeleteMapping(value = "/{customerId}")
-    public void deleteCustomer(@PathVariable Long customerId) {
-        LOGGER.info("The customer has just been deleted");
+    public void deleteCustomer(@PathVariable Long customerId) throws CustomerNotFoundException {
+        LOGGER.info("The customer will be deleted soon...");
         customerFacade.deleteCustomer(customerId);
     }
 }
