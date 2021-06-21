@@ -1,24 +1,10 @@
 package com.movie.rental.store.facade;
 
-import com.movie.rental.store.domain.Borrow;
-import com.movie.rental.store.domain.Copy;
 import com.movie.rental.store.domain.Customer;
-import com.movie.rental.store.domain.Movie;
-import com.movie.rental.store.domain.archive.BorrowArchive;
 import com.movie.rental.store.domain.dto.CustomerDto;
-import com.movie.rental.store.domain.enums.MediaType;
-import com.movie.rental.store.domain.enums.Status;
-import com.movie.rental.store.domain.enums.Type;
 import com.movie.rental.store.exception.CustomerAlreadyExistException;
 import com.movie.rental.store.exception.CustomerNotFoundException;
-import com.movie.rental.store.mapper.archive.ToArchiveMapper;
-import com.movie.rental.store.repository.BorrowRepository;
-import com.movie.rental.store.repository.CopyRepository;
 import com.movie.rental.store.repository.CustomerRepository;
-import com.movie.rental.store.repository.MovieRepository;
-import com.movie.rental.store.service.CopyDbService;
-import com.movie.rental.store.service.archive.BorrowArchiveDbService;
-import com.movie.rental.store.service.archive.DeleteCopyDbService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,15 +26,6 @@ public class CustomerFacadeTestSuite {
 
     @Autowired
     private CustomerRepository customerRepository;
-
-    @Autowired
-    private MovieRepository movieRepository;
-
-    @Autowired
-    private CopyRepository copyRepository;
-
-    @Autowired
-    private BorrowRepository borrowRepository;
 
     private Customer customer1 = Customer.builder()
             .customerMailAddress("customer1@mail.com")
@@ -112,7 +89,7 @@ public class CustomerFacadeTestSuite {
         assertEquals(4, customers.size());
     }
 
-    @Test //expected = CustomerAlreadyExistException.class
+    @Test
     public void updateCustomerTest() throws CustomerNotFoundException, CustomerAlreadyExistException {
         //Given
 

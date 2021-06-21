@@ -149,7 +149,7 @@ public class CopyTestSuite {
         copyRepository.save(copy1);
         Long copy2Id = copy2.getCopyId();
         Optional<Copy> copy1Optional = copyRepository.findById(copy1Id);
-        Optional<Copy> copy2Optional = copyRepository.findById(copy1Id);
+        Optional<Copy> copy2Optional = copyRepository.findById(copy2Id);
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
         //Then

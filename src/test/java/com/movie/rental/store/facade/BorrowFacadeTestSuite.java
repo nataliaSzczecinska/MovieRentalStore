@@ -142,7 +142,7 @@ public class BorrowFacadeTestSuite {
         //Given
 
         //When
-        List<BorrowDto> borrows = borrowFacade.getBorrowsByUserId(customer.getCustomerId());
+        List<BorrowDto> borrows = borrowFacade.getBorrowsByCustomerId(customer.getCustomerId());
 
         //Then
         assertEquals(2, borrows.size());

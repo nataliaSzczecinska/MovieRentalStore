@@ -36,15 +36,19 @@ public class BorrowFacade {
         return borrowMapper.mapToBorrowDtoList(borrowDbService.getAllBorrows());
     }
 
+    public BorrowDto getBorrowById(final Long borrowId) throws BorrowNotFoundException {
+        return borrowMapper.mapToBorrowDto(borrowDbService.getBorrowById(borrowId).orElseThrow(BorrowNotFoundException::new));
+    }
+
     public List<BorrowDto> getBorrowsByMovieId(final Long movieId) {
         return borrowMapper.mapToBorrowDtoList(borrowDbService.getAllBorrows().stream()
                 .filter(borrow -> borrow.getCopy().getMovie().getMovieId().equals(movieId))
                 .collect(Collectors.toList()));
     }
 
-    public List<BorrowDto> getBorrowsByUserId(final Long userId) {
+    public List<BorrowDto> getBorrowsByCustomerId(final Long customerId) {
         return borrowMapper.mapToBorrowDtoList(borrowDbService.getAllBorrows().stream()
-                .filter(borrow -> borrow.getCustomer().getCustomerId().equals(userId))
+                .filter(borrow -> borrow.getCustomer().getCustomerId().equals(customerId))
                 .collect(Collectors.toList()));
     }
 

@@ -30,8 +30,8 @@ public class CustomerController {
         return customerFacade.getCustomerById(customerId);
     }
 
-    @PostMapping
-    public void createCustomer(@RequestParam String mailAddress) throws CustomerAlreadyExistException {
+    @PostMapping("/{mailAddress}")
+    public void createCustomer(@PathVariable String mailAddress) throws CustomerAlreadyExistException {
         LOGGER.info("The new customer has been created if possible");
         customerFacade.createCustomer(mailAddress);
     }

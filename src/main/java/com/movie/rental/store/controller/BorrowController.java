@@ -25,31 +25,37 @@ public class BorrowController {
         return borrowFacade.getAllBorrows();
     }
 
+    @GetMapping(value = "/{borrowId}")
+    public BorrowDto getBorrowById(@PathVariable  final Long borrowId) throws BorrowNotFoundException {
+        LOGGER.info("Get all borrows");
+        return borrowFacade.getBorrowById(borrowId);
+    }
+
     @GetMapping(value = "/movie/{movieId}")
     public List<BorrowDto> getBorrowsByMovieId(@PathVariable Long movieId) {
         LOGGER.info("Get borrows by movie");
         return borrowFacade.getBorrowsByMovieId(movieId);
     }
 
-    @GetMapping(value = "/user/{userId}")
-    public List<BorrowDto> getBorrowsByUserId(@PathVariable Long userId) {
-        LOGGER.info("Get borrows by user");
-        return borrowFacade.getBorrowsByUserId(userId);
+    @GetMapping(value = "/customer/{customerId}")
+    public List<BorrowDto> getBorrowsByCustomerId(@PathVariable Long customerId) {
+        LOGGER.info("Get borrows by customer");
+        return borrowFacade.getBorrowsByCustomerId(customerId);
     }
 
-    @PostMapping(value = "/movie{movieId}/user{userId}/{mediaType}")
-    public void createBorrow(@PathVariable Long movieId, @PathVariable Long userId, @PathVariable String mediaType) throws CustomerNotFoundException, MovieNotFoundException {
-        borrowFacade.createBorrow(movieId, userId, mediaType);
+    @PostMapping(value = "/movie={movieId}/customer={customerId}/{mediaType}")
+    public void createBorrow(@PathVariable Long movieId, @PathVariable Long customerId, @PathVariable String mediaType) throws CustomerNotFoundException, MovieNotFoundException {
+        borrowFacade.createBorrow(movieId, customerId, mediaType);
     }
 
-    @PutMapping(value = "/{borrowId}/changeBorrowReturnDate")
-    public BorrowDto changeBorrowReturnDate(@RequestParam String newBorrowDate, @PathVariable Long borrowId) throws BorrowNotFoundException {
+    @PutMapping(value = "/{borrowId}/{newBorrowDate}")
+    public BorrowDto changeBorrowReturnDate(@PathVariable String newBorrowDate, @PathVariable Long borrowId) throws BorrowNotFoundException {
         LOGGER.info("The borrow has just changed the return date");
         return borrowFacade.changeBorrowReturnDate(newBorrowDate, borrowId);
     }
 
-    @DeleteMapping(value = "/{borrowId}")
-    public void borrowIsFinish(@PathVariable Long borrowId, @RequestParam String finishReason) throws BorrowNotFoundException {
+    @DeleteMapping(value = "/{borrowId}/{finishReason}")
+    public void borrowIsFinish(@PathVariable Long borrowId, @PathVariable String finishReason) throws BorrowNotFoundException {
         LOGGER.info("The borrow has just been finished");
         borrowFacade.borrowIsFinished(borrowId, finishReason);
     }
