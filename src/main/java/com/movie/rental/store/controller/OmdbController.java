@@ -7,8 +7,6 @@ import com.movie.rental.store.omdb.facade.OmdbFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/movies/omdb")
 @RequiredArgsConstructor

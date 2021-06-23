@@ -100,17 +100,4 @@ public class CustomerFacadeTestSuite {
         assertEquals(customer1.getCustomerId(), customerDto.getCustomerId());
         assertEquals("new@customer.pl", customerDto.getCustomerMailAddress());
     }
-
-    /*@Test
-    public void deleteCustomerByIdIfBorrowsIsNullTest() throws CustomerNotFoundException {
-        //Given
-
-        //When
-        Long id = customer2.getCustomerId();
-        customerFacade.deleteCustomer(id);
-        Optional<Customer> customerOptional = customerRepository.findById(id);
-
-        //Then
-        assertFalse(customerOptional.isPresent());
-    }*/
 }

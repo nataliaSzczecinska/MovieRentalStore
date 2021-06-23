@@ -18,13 +18,13 @@ public class ArchiveDataController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ArchiveDataController.class);
     private final ArchiveDataFacade archiveDataFacade;
 
-    @GetMapping(value = "/user/{customerId}")
+    @GetMapping(value = "/customer={customerId}")
     public List<BorrowArchiveDto> getBorrowsArchiveByCustomerId(@PathVariable Long customerId) {
         LOGGER.info("Get borrows archive by customer with id {}", customerId);
         return archiveDataFacade.getBorrowsArchiveByCustomerId(customerId);
     }
 
-    @GetMapping(value = "/movie/{movieId}")
+    @GetMapping(value = "/movie={movieId}")
     public List<BorrowArchiveDto> getBorrowsArchiveByMovieId(@PathVariable Long movieId) {
         LOGGER.info("Get borrows archive by movie with id {}", movieId);
         return archiveDataFacade.getBorrowsArchiveByMovieId(movieId);
@@ -47,7 +47,4 @@ public class ArchiveDataController {
         LOGGER.info("Get all delete customers");
         return archiveDataFacade.getAllBorrowsArchive();
     }
-
-    //    //getNumberOfBorrowsForEachMovie (pobiera listę czy coś - pomyśleć i zrobić z wykrozystaniem nameQuery moduł 17.4
-    //    //getTop10Movies (pobiera listę najlepszych 10 tytułów filmów do wypożyczenia w ostatnim miesiącu - z borrow i borrowArchive)
 }

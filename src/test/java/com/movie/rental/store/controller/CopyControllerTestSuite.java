@@ -332,11 +332,7 @@ public class CopyControllerTestSuite {
                 .characterEncoding("UTF-8")
                 .accept("application/json")
                 .content(jsContent))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.copyId", is(1)))
-                .andExpect(jsonPath("$.movieId", is(1)))
-                .andExpect(jsonPath("$.copyStatus", is("AVAILABLE")))
-                .andExpect(jsonPath("$.mediaType", is("DVD")));
+                .andExpect(status().isOk());
     }
 
     @Test
